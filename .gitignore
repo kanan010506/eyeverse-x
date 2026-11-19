@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+*.blend1
+.DS_Store
+dist/
+output/*.log
+output/logs/
+output/queue.*
+output/_exposure.png
+output/debug.blend
+output/preview*.png
+_to_delete/
+output/stop
