@@ -1,0 +1,1242 @@
+[
+  {
+    "frame": 0,
+    "theta": 0.0,
+    "input": {
+      "h": 0.0,
+      "v": 1.0
+    },
+    "eye_rotation_L": [
+      -0.141333,
+      -0.006294,
+      -0.088864
+    ],
+    "eye_rotation_R": [
+      -0.14134,
+      0.006294,
+      0.088861
+    ],
+    "pupil_center_2D_L": [
+      812.9077,
+      492.9793
+    ],
+    "pupil_center_2D_R": [
+      211.1003,
+      493.0201
+    ],
+    "camera_matrix": {
+      "K": [
+        [
+          3840.0,
+          0.0,
+          512.0
+        ],
+        [
+          0.0,
+          3840.0,
+          512.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "world_to_camera": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -7.5e-08,
+          -1.0,
+          -3e-08
+        ],
+        [
+          0.0,
+          1.0,
+          -7.5e-08,
+          0.400000006
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "image_size": [
+        1024,
+        1024
+      ],
+      "lens_mm": 135.0,
+      "sensor_mm": 36.0,
+      "fov_deg": 15.1893,
+      "convention": "OpenCV (x right, y down, z forward); pixel origin at top-left corner"
+    },
+    "fixation_point": [
+      0.0,
+      -0.35,
+      0.05
+    ],
+    "fixation_distance": 0.35,
+    "gaze_vector_L": [
+      -0.088746,
+      -0.986044,
+      0.14086
+    ],
+    "gaze_vector_R": [
+      0.088743,
+      -0.986043,
+      0.140867
+    ],
+    "eye_center_L": [
+      0.0315,
+      -5e-06,
+      2e-06
+    ],
+    "eye_center_R": [
+      -0.0315,
+      5e-06,
+      -2e-06
+    ],
+    "pupil_center_3D_L": [
+      0.030295,
+      -0.013396,
+      0.001915
+    ],
+    "pupil_center_3D_R": [
+      -0.030295,
+      -0.013385,
+      0.001911
+    ],
+    "pupil_diameter_mm": 4.0,
+    "pupil_visibility_L": 1.0,
+    "pupil_visibility_R": 1.0,
+    "vergence_deg": 10.1828,
+    "lid_closure": 0.0,
+    "aim_error_deg": 3.9e-05,
+    "projection_check_px": 2.8e-05,
+    "camera": "EyeCam",
+    "image": "renders/frame_00.png"
+  },
+  {
+    "frame": 1,
+    "theta": 0.628319,
+    "input": {
+      "h": 0.587785,
+      "v": 0.809017
+    },
+    "eye_rotation_L": [
+      -0.115058,
+      -0.000345,
+      -0.005991
+    ],
+    "eye_rotation_R": [
+      -0.113385,
+      0.009736,
+      0.171134
+    ],
+    "pupil_center_2D_L": [
+      824.1504,
+      496.4899
+    ],
+    "pupil_center_2D_R": [
+      222.1727,
+      496.7641
+    ],
+    "camera_matrix": {
+      "K": [
+        [
+          3840.0,
+          0.0,
+          512.0
+        ],
+        [
+          0.0,
+          3840.0,
+          512.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "world_to_camera": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -7.5e-08,
+          -1.0,
+          -3e-08
+        ],
+        [
+          0.0,
+          1.0,
+          -7.5e-08,
+          0.400000006
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "image_size": [
+        1024,
+        1024
+      ],
+      "lens_mm": 135.0,
+      "sensor_mm": 36.0,
+      "fov_deg": 15.1893,
+      "convention": "OpenCV (x right, y down, z forward); pixel origin at top-left corner"
+    },
+    "fixation_point": [
+      0.029389,
+      -0.35,
+      0.040451
+    ],
+    "fixation_distance": 0.35,
+    "gaze_vector_L": [
+      -0.005991,
+      -0.99337,
+      0.114804
+    ],
+    "gaze_vector_R": [
+      0.170292,
+      -0.978877,
+      0.113137
+    ],
+    "eye_center_L": [
+      0.0315,
+      -5e-06,
+      2e-06
+    ],
+    "eye_center_R": [
+      -0.0315,
+      5e-06,
+      -2e-06
+    ],
+    "pupil_center_3D_L": [
+      0.031419,
+      -0.013495,
+      0.001561
+    ],
+    "pupil_center_3D_R": [
+      -0.029187,
+      -0.013288,
+      0.001534
+    ],
+    "pupil_diameter_mm": 4.0,
+    "pupil_visibility_L": 1.0,
+    "pupil_visibility_R": 1.0,
+    "vergence_deg": 10.1481,
+    "lid_closure": 0.0,
+    "aim_error_deg": 2.5e-05,
+    "projection_check_px": 2.2e-05,
+    "camera": "EyeCam",
+    "image": "renders/frame_01.png"
+  },
+  {
+    "frame": 2,
+    "theta": 1.256637,
+    "input": {
+      "h": 0.951057,
+      "v": 0.309017
+    },
+    "eye_rotation_L": [
+      -0.044065,
+      0.001009,
+      0.045789
+    ],
+    "eye_rotation_R": [
+      -0.04304,
+      0.004796,
+      0.221928
+    ],
+    "pupil_center_2D_L": [
+      831.1861,
+      506.0356
+    ],
+    "pupil_center_2D_R": [
+      228.9336,
+      506.2193
+    ],
+    "camera_matrix": {
+      "K": [
+        [
+          3840.0,
+          0.0,
+          512.0
+        ],
+        [
+          0.0,
+          3840.0,
+          512.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "world_to_camera": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -7.5e-08,
+          -1.0,
+          -3e-08
+        ],
+        [
+          0.0,
+          1.0,
+          -7.5e-08,
+          0.400000006
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "image_size": [
+        1024,
+        1024
+      ],
+      "lens_mm": 135.0,
+      "sensor_mm": 36.0,
+      "fov_deg": 15.1893,
+      "convention": "OpenCV (x right, y down, z forward); pixel origin at top-left corner"
+    },
+    "fixation_point": [
+      0.047553,
+      -0.35,
+      0.015451
+    ],
+    "fixation_distance": 0.35,
+    "gaze_vector_L": [
+      0.045773,
+      -0.99798,
+      0.044051
+    ],
+    "gaze_vector_R": [
+      0.220108,
+      -0.974526,
+      0.043026
+    ],
+    "eye_center_L": [
+      0.0315,
+      -5e-06,
+      2e-06
+    ],
+    "eye_center_R": [
+      -0.0315,
+      5e-06,
+      -2e-06
+    ],
+    "pupil_center_3D_L": [
+      0.032122,
+      -0.013558,
+      0.0006
+    ],
+    "pupil_center_3D_R": [
+      -0.028511,
+      -0.013229,
+      0.000582
+    ],
+    "pupil_diameter_mm": 4.0,
+    "pupil_visibility_L": 1.0,
+    "pupil_visibility_R": 1.0,
+    "vergence_deg": 10.0919,
+    "lid_closure": 0.0,
+    "aim_error_deg": 1.5e-05,
+    "projection_check_px": 2.4e-05,
+    "camera": "EyeCam",
+    "image": "renders/frame_02.png"
+  },
+  {
+    "frame": 3,
+    "theta": 1.884956,
+    "input": {
+      "h": 0.951057,
+      "v": -0.309017
+    },
+    "eye_rotation_L": [
+      0.044077,
+      -0.001009,
+      0.045789
+    ],
+    "eye_rotation_R": [
+      0.043028,
+      -0.004795,
+      0.221928
+    ],
+    "pupil_center_2D_L": [
+      831.1861,
+      517.9256
+    ],
+    "pupil_center_2D_R": [
+      228.9336,
+      517.8195
+    ],
+    "camera_matrix": {
+      "K": [
+        [
+          3840.0,
+          0.0,
+          512.0
+        ],
+        [
+          0.0,
+          3840.0,
+          512.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "world_to_camera": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -7.5e-08,
+          -1.0,
+          -3e-08
+        ],
+        [
+          0.0,
+          1.0,
+          -7.5e-08,
+          0.400000006
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "image_size": [
+        1024,
+        1024
+      ],
+      "lens_mm": 135.0,
+      "sensor_mm": 36.0,
+      "fov_deg": 15.1893,
+      "convention": "OpenCV (x right, y down, z forward); pixel origin at top-left corner"
+    },
+    "fixation_point": [
+      0.047553,
+      -0.35,
+      -0.015451
+    ],
+    "fixation_distance": 0.35,
+    "gaze_vector_L": [
+      0.045773,
+      -0.99798,
+      -0.044063
+    ],
+    "gaze_vector_R": [
+      0.220108,
+      -0.974527,
+      -0.043014
+    ],
+    "eye_center_L": [
+      0.0315,
+      -5e-06,
+      2e-06
+    ],
+    "eye_center_R": [
+      -0.0315,
+      5e-06,
+      -2e-06
+    ],
+    "pupil_center_3D_L": [
+      0.032122,
+      -0.013558,
+      -0.000596
+    ],
+    "pupil_center_3D_R": [
+      -0.028511,
+      -0.013229,
+      -0.000586
+    ],
+    "pupil_diameter_mm": 4.0,
+    "pupil_visibility_L": 1.0,
+    "pupil_visibility_R": 1.0,
+    "vergence_deg": 10.0919,
+    "lid_closure": 0.0,
+    "aim_error_deg": 2.9e-05,
+    "projection_check_px": 1.5e-05,
+    "camera": "EyeCam",
+    "image": "renders/frame_03.png"
+  },
+  {
+    "frame": 4,
+    "theta": 2.513274,
+    "input": {
+      "h": 0.587785,
+      "v": -0.809017
+    },
+    "eye_rotation_L": [
+      0.115069,
+      0.000345,
+      -0.005991
+    ],
+    "eye_rotation_R": [
+      0.113374,
+      -0.009735,
+      0.171134
+    ],
+    "pupil_center_2D_L": [
+      824.1504,
+      527.4707
+    ],
+    "pupil_center_2D_R": [
+      222.1728,
+      527.2753
+    ],
+    "camera_matrix": {
+      "K": [
+        [
+          3840.0,
+          0.0,
+          512.0
+        ],
+        [
+          0.0,
+          3840.0,
+          512.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "world_to_camera": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -7.5e-08,
+          -1.0,
+          -3e-08
+        ],
+        [
+          0.0,
+          1.0,
+          -7.5e-08,
+          0.400000006
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "image_size": [
+        1024,
+        1024
+      ],
+      "lens_mm": 135.0,
+      "sensor_mm": 36.0,
+      "fov_deg": 15.1893,
+      "convention": "OpenCV (x right, y down, z forward); pixel origin at top-left corner"
+    },
+    "fixation_point": [
+      0.029389,
+      -0.35,
+      -0.040451
+    ],
+    "fixation_distance": 0.35,
+    "gaze_vector_L": [
+      -0.005991,
+      -0.993369,
+      -0.114815
+    ],
+    "gaze_vector_R": [
+      0.170292,
+      -0.978878,
+      -0.113126
+    ],
+    "eye_center_L": [
+      0.0315,
+      -5e-06,
+      2e-06
+    ],
+    "eye_center_R": [
+      -0.0315,
+      5e-06,
+      -2e-06
+    ],
+    "pupil_center_3D_L": [
+      0.031419,
+      -0.013495,
+      -0.001557
+    ],
+    "pupil_center_3D_R": [
+      -0.029187,
+      -0.013288,
+      -0.001538
+    ],
+    "pupil_diameter_mm": 4.0,
+    "pupil_visibility_L": 1.0,
+    "pupil_visibility_R": 1.0,
+    "vergence_deg": 10.1481,
+    "lid_closure": 0.0,
+    "aim_error_deg": 5e-05,
+    "projection_check_px": 3.2e-05,
+    "camera": "EyeCam",
+    "image": "renders/frame_04.png"
+  },
+  {
+    "frame": 5,
+    "theta": 3.141593,
+    "input": {
+      "h": 0.0,
+      "v": -1.0
+    },
+    "eye_rotation_L": [
+      0.141344,
+      0.006295,
+      -0.088864
+    ],
+    "eye_rotation_R": [
+      0.141329,
+      -0.006294,
+      0.088861
+    ],
+    "pupil_center_2D_L": [
+      812.9076,
+      530.9813
+    ],
+    "pupil_center_2D_R": [
+      211.1003,
+      531.0187
+    ],
+    "camera_matrix": {
+      "K": [
+        [
+          3840.0,
+          0.0,
+          512.0
+        ],
+        [
+          0.0,
+          3840.0,
+          512.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "world_to_camera": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -7.5e-08,
+          -1.0,
+          -3e-08
+        ],
+        [
+          0.0,
+          1.0,
+          -7.5e-08,
+          0.400000006
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "image_size": [
+        1024,
+        1024
+      ],
+      "lens_mm": 135.0,
+      "sensor_mm": 36.0,
+      "fov_deg": 15.1893,
+      "convention": "OpenCV (x right, y down, z forward); pixel origin at top-left corner"
+    },
+    "fixation_point": [
+      0.0,
+      -0.35,
+      -0.05
+    ],
+    "fixation_distance": 0.35,
+    "gaze_vector_L": [
+      -0.088745,
+      -0.986042,
+      -0.140871
+    ],
+    "gaze_vector_R": [
+      0.088743,
+      -0.986045,
+      -0.140856
+    ],
+    "eye_center_L": [
+      0.0315,
+      -5e-06,
+      2e-06
+    ],
+    "eye_center_R": [
+      -0.0315,
+      5e-06,
+      -2e-06
+    ],
+    "pupil_center_3D_L": [
+      0.030295,
+      -0.013396,
+      -0.001911
+    ],
+    "pupil_center_3D_R": [
+      -0.030295,
+      -0.013385,
+      -0.001915
+    ],
+    "pupil_diameter_mm": 4.0,
+    "pupil_visibility_L": 1.0,
+    "pupil_visibility_R": 1.0,
+    "vergence_deg": 10.1827,
+    "lid_closure": 0.0,
+    "aim_error_deg": 3.1e-05,
+    "projection_check_px": 9e-06,
+    "camera": "EyeCam",
+    "image": "renders/frame_05.png"
+  },
+  {
+    "frame": 6,
+    "theta": 3.769911,
+    "input": {
+      "h": -0.587785,
+      "v": -0.809017
+    },
+    "eye_rotation_L": [
+      0.113388,
+      0.009737,
+      -0.171139
+    ],
+    "eye_rotation_R": [
+      0.115054,
+      -0.000345,
+      0.005991
+    ],
+    "pupil_center_2D_L": [
+      801.8346,
+      527.2373
+    ],
+    "pupil_center_2D_R": [
+      199.8582,
+      527.5088
+    ],
+    "camera_matrix": {
+      "K": [
+        [
+          3840.0,
+          0.0,
+          512.0
+        ],
+        [
+          0.0,
+          3840.0,
+          512.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "world_to_camera": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -7.5e-08,
+          -1.0,
+          -3e-08
+        ],
+        [
+          0.0,
+          1.0,
+          -7.5e-08,
+          0.400000006
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "image_size": [
+        1024,
+        1024
+      ],
+      "lens_mm": 135.0,
+      "sensor_mm": 36.0,
+      "fov_deg": 15.1893,
+      "convention": "OpenCV (x right, y down, z forward); pixel origin at top-left corner"
+    },
+    "fixation_point": [
+      -0.029389,
+      -0.35,
+      -0.040451
+    ],
+    "fixation_distance": 0.35,
+    "gaze_vector_L": [
+      -0.170297,
+      -0.978876,
+      -0.11314
+    ],
+    "gaze_vector_R": [
+      0.005991,
+      -0.993371,
+      -0.1148
+    ],
+    "eye_center_L": [
+      0.0315,
+      -5e-06,
+      2e-06
+    ],
+    "eye_center_R": [
+      -0.0315,
+      5e-06,
+      -2e-06
+    ],
+    "pupil_center_3D_L": [
+      0.029187,
+      -0.013299,
+      -0.001534
+    ],
+    "pupil_center_3D_R": [
+      -0.031419,
+      -0.013485,
+      -0.001561
+    ],
+    "pupil_diameter_mm": 4.0,
+    "pupil_visibility_L": 1.0,
+    "pupil_visibility_R": 1.0,
+    "vergence_deg": 10.1483,
+    "lid_closure": 0.0,
+    "aim_error_deg": 2.3e-05,
+    "projection_check_px": 2.1e-05,
+    "camera": "EyeCam",
+    "image": "renders/frame_06.png"
+  },
+  {
+    "frame": 7,
+    "theta": 4.39823,
+    "input": {
+      "h": -0.951057,
+      "v": -0.309017
+    },
+    "eye_rotation_L": [
+      0.043041,
+      0.004797,
+      -0.221934
+    ],
+    "eye_rotation_R": [
+      0.044064,
+      0.001009,
+      -0.045788
+    ],
+    "pupil_center_2D_L": [
+      795.0734,
+      517.7808
+    ],
+    "pupil_center_2D_R": [
+      192.8229,
+      517.9644
+    ],
+    "camera_matrix": {
+      "K": [
+        [
+          3840.0,
+          0.0,
+          512.0
+        ],
+        [
+          0.0,
+          3840.0,
+          512.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "world_to_camera": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -7.5e-08,
+          -1.0,
+          -3e-08
+        ],
+        [
+          0.0,
+          1.0,
+          -7.5e-08,
+          0.400000006
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "image_size": [
+        1024,
+        1024
+      ],
+      "lens_mm": 135.0,
+      "sensor_mm": 36.0,
+      "fov_deg": 15.1893,
+      "convention": "OpenCV (x right, y down, z forward); pixel origin at top-left corner"
+    },
+    "fixation_point": [
+      -0.047553,
+      -0.35,
+      -0.015451
+    ],
+    "fixation_distance": 0.35,
+    "gaze_vector_L": [
+      -0.220115,
+      -0.974525,
+      -0.043027
+    ],
+    "gaze_vector_R": [
+      -0.045772,
+      -0.99798,
+      -0.04405
+    ],
+    "eye_center_L": [
+      0.0315,
+      -5e-06,
+      2e-06
+    ],
+    "eye_center_R": [
+      -0.0315,
+      5e-06,
+      -2e-06
+    ],
+    "pupil_center_3D_L": [
+      0.028511,
+      -0.013239,
+      -0.000582
+    ],
+    "pupil_center_3D_R": [
+      -0.032122,
+      -0.013547,
+      -0.0006
+    ],
+    "pupil_diameter_mm": 4.0,
+    "pupil_visibility_L": 1.0,
+    "pupil_visibility_R": 1.0,
+    "vergence_deg": 10.0923,
+    "lid_closure": 0.0,
+    "aim_error_deg": 3e-05,
+    "projection_check_px": 2.2e-05,
+    "camera": "EyeCam",
+    "image": "renders/frame_07.png"
+  },
+  {
+    "frame": 8,
+    "theta": 5.026548,
+    "input": {
+      "h": -0.951057,
+      "v": 0.309017
+    },
+    "eye_rotation_L": [
+      -0.04303,
+      -0.004795,
+      -0.221935
+    ],
+    "eye_rotation_R": [
+      -0.044076,
+      -0.001009,
+      -0.045788
+    ],
+    "pupil_center_2D_L": [
+      795.0733,
+      506.1798
+    ],
+    "pupil_center_2D_R": [
+      192.8229,
+      506.0745
+    ],
+    "camera_matrix": {
+      "K": [
+        [
+          3840.0,
+          0.0,
+          512.0
+        ],
+        [
+          0.0,
+          3840.0,
+          512.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "world_to_camera": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -7.5e-08,
+          -1.0,
+          -3e-08
+        ],
+        [
+          0.0,
+          1.0,
+          -7.5e-08,
+          0.400000006
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "image_size": [
+        1024,
+        1024
+      ],
+      "lens_mm": 135.0,
+      "sensor_mm": 36.0,
+      "fov_deg": 15.1893,
+      "convention": "OpenCV (x right, y down, z forward); pixel origin at top-left corner"
+    },
+    "fixation_point": [
+      -0.047553,
+      -0.35,
+      0.015451
+    ],
+    "fixation_distance": 0.35,
+    "gaze_vector_L": [
+      -0.220115,
+      -0.974525,
+      0.043016
+    ],
+    "gaze_vector_R": [
+      -0.045772,
+      -0.99798,
+      0.044061
+    ],
+    "eye_center_L": [
+      0.0315,
+      -5e-06,
+      2e-06
+    ],
+    "eye_center_R": [
+      -0.0315,
+      5e-06,
+      -2e-06
+    ],
+    "pupil_center_3D_L": [
+      0.028511,
+      -0.013239,
+      0.000586
+    ],
+    "pupil_center_3D_R": [
+      -0.032122,
+      -0.013547,
+      0.000596
+    ],
+    "pupil_diameter_mm": 4.0,
+    "pupil_visibility_L": 1.0,
+    "pupil_visibility_R": 1.0,
+    "vergence_deg": 10.0923,
+    "lid_closure": 0.0,
+    "aim_error_deg": 2.5e-05,
+    "projection_check_px": 3e-05,
+    "camera": "EyeCam",
+    "image": "renders/frame_08.png"
+  },
+  {
+    "frame": 9,
+    "theta": 5.654867,
+    "input": {
+      "h": -0.587785,
+      "v": 0.809017
+    },
+    "eye_rotation_L": [
+      -0.113377,
+      -0.009736,
+      -0.171139
+    ],
+    "eye_rotation_R": [
+      -0.115066,
+      0.000345,
+      0.005991
+    ],
+    "pupil_center_2D_L": [
+      801.8346,
+      496.7239
+    ],
+    "pupil_center_2D_R": [
+      199.8582,
+      496.5301
+    ],
+    "camera_matrix": {
+      "K": [
+        [
+          3840.0,
+          0.0,
+          512.0
+        ],
+        [
+          0.0,
+          3840.0,
+          512.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "world_to_camera": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -7.5e-08,
+          -1.0,
+          -3e-08
+        ],
+        [
+          0.0,
+          1.0,
+          -7.5e-08,
+          0.400000006
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "image_size": [
+        1024,
+        1024
+      ],
+      "lens_mm": 135.0,
+      "sensor_mm": 36.0,
+      "fov_deg": 15.1893,
+      "convention": "OpenCV (x right, y down, z forward); pixel origin at top-left corner"
+    },
+    "fixation_point": [
+      -0.029389,
+      -0.35,
+      0.040451
+    ],
+    "fixation_distance": 0.35,
+    "gaze_vector_L": [
+      -0.170297,
+      -0.978877,
+      0.113129
+    ],
+    "gaze_vector_R": [
+      0.005991,
+      -0.993369,
+      0.114812
+    ],
+    "eye_center_L": [
+      0.0315,
+      -5e-06,
+      2e-06
+    ],
+    "eye_center_R": [
+      -0.0315,
+      5e-06,
+      -2e-06
+    ],
+    "pupil_center_3D_L": [
+      0.029187,
+      -0.013299,
+      0.001538
+    ],
+    "pupil_center_3D_R": [
+      -0.031419,
+      -0.013485,
+      0.001557
+    ],
+    "pupil_diameter_mm": 4.0,
+    "pupil_visibility_L": 1.0,
+    "pupil_visibility_R": 1.0,
+    "vergence_deg": 10.1484,
+    "lid_closure": 0.0,
+    "aim_error_deg": 3.1e-05,
+    "projection_check_px": 2.9e-05,
+    "camera": "EyeCam",
+    "image": "renders/frame_09.png"
+  }
+]
