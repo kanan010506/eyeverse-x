@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' file: data: blob:; media-src 'self' file:; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'unsafe-inline'; connect-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+<title>EYEVERSE X · Synthetic Gaze Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #06080c; --bg-2: #0a0d13; --card: rgba(18, 22, 31, .72); --card-solid: #11151d;
+    --line: rgba(255,255,255,.07); --line-2: rgba(255,255,255,.12);
+    --ink: #eef1f6; --muted: #8c95a6; --faint: #566072;
+    --blue: #3d8bff; --cyan: #22d3ee; --violet: #8b5cf6; --amber: #ffb547; --green: #2fd4a0; --red: #ff5d6c;
+    --grad: linear-gradient(120deg, #3d8bff 0%, #22d3ee 45%, #8b5cf6 100%);
+    --display: "Space Grotesk", "Inter", -apple-system, sans-serif;
+    --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+    --r: 16px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 14px/1.55 var(--sans); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  body::before { content: ""; position: fixed; inset: -20%; z-index: -1; pointer-events: none;
+    background: radial-gradient(40% 35% at 15% 10%, rgba(61,139,255,.16), transparent 70%),
+                radial-gradient(35% 30% at 85% 5%, rgba(139,92,246,.14), transparent 70%),
+                radial-gradient(40% 40% at 60% 100%, rgba(34,211,238,.08), transparent 70%); }
+  a { color: var(--cyan); text-decoration: none; }
+  .mono { font-family: var(--mono); }
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 0 32px; }
+
+  /* top bar */
+  header { position: sticky; top: 0; z-index: 20; backdrop-filter: blur(14px); background: rgba(6,8,12,.72); border-bottom: 1px solid var(--line); }
+  header .wrap { display: flex; align-items: center; height: 60px; gap: 28px; }
+  .logo { font: 700 16px var(--display); letter-spacing: .16em; display: flex; align-items: center; gap: 10px; }
+  .logo i { width: 22px; height: 22px; border-radius: 50%; background: radial-gradient(circle at 50% 50%, #000 0 26%, transparent 27%), var(--grad); box-shadow: 0 0 18px rgba(61,139,255,.6); }
+  header nav { display: flex; gap: 4px; margin-left: auto; }
+  header nav a { color: var(--muted); padding: 7px 12px; border-radius: 999px; font-weight: 500; font-size: 13px; transition: .2s; }
+  header nav a:hover, header nav a.on { color: var(--ink); background: rgba(255,255,255,.06); }
+  .pill { font: 500 11.5px var(--mono); padding: 5px 10px; border-radius: 999px; border: 1px solid var(--line-2); color: var(--muted); }
+
+  /* hero */
+  .hero { display: grid; grid-template-columns: 1.05fr 1fr; gap: 48px; align-items: center; padding: 64px 0 40px; }
+  .eyebrow { font: 600 12px var(--mono); letter-spacing: .18em; text-transform: uppercase; color: var(--cyan); }
+  h1 { font: 700 64px/1.02 var(--display); letter-spacing: -.03em; margin: 14px 0 18px; }
+  h1 span { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .lead { color: var(--muted); font-size: 17px; max-width: 520px; margin: 0 0 28px; }
+  .cta { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 11px 18px; border-radius: 12px; font-weight: 600; font-size: 14px; border: 1px solid var(--line-2); color: var(--ink); background: rgba(255,255,255,.04); transition: .2s; }
+  .btn.primary { background: var(--grad); border: 0; color: #031018; box-shadow: 0 8px 30px rgba(61,139,255,.35); }
+  .btn:hover { transform: translateY(-1px); }
+  .stage-hero { position: relative; aspect-ratio: 1; border-radius: 28px; overflow: hidden; border: 1px solid var(--line-2);
+    box-shadow: 0 30px 80px rgba(0,0,0,.6), 0 0 0 1px rgba(61,139,255,.15), 0 0 80px rgba(61,139,255,.12); background: #000; }
+  .stage-hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity .18s ease; }
+  .stage-hero svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  .stage-hero .tag { position: absolute; left: 16px; bottom: 16px; font: 500 12px var(--mono); padding: 7px 11px; border-radius: 10px; background: rgba(0,0,0,.55); backdrop-filter: blur(8px); border: 1px solid var(--line-2); }
+  .stage-hero .hint { position: absolute; right: 16px; top: 16px; font: 500 11px var(--mono); color: var(--muted); padding: 6px 10px; border-radius: 999px; background: rgba(0,0,0,.45); border: 1px solid var(--line); }
+  .scan { position: absolute; inset: 0; background: linear-gradient(transparent 0, rgba(34,211,238,.06) 50%, transparent 100%); height: 30%; animation: scan 4s linear infinite; pointer-events: none; }
+  @keyframes scan { from { transform: translateY(-100%); } to { transform: translateY(400%); } }
+
+  /* KPI strip */
+  .kpis { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin: 8px 0 12px; }
+  .kpi { background: var(--card); border: 1px solid var(--line); border-radius: var(--r); padding: 16px 18px; position: relative; overflow: hidden; }
+  .kpi::after { content: ""; position: absolute; inset: 0 0 auto 0; height: 2px; background: var(--grad); opacity: .7; }
+  .kpi small { display: block; color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+  .kpi b { display: block; font: 600 26px var(--display); margin-top: 6px; letter-spacing: -.01em; }
+  .kpi em { font-style: normal; color: var(--faint); font-size: 12px; }
+  .ok { color: var(--green); } .bad { color: var(--red); } .warn { color: var(--amber); }
+
+  section { padding: 56px 0 8px; scroll-margin-top: 70px; }
+  .sh { display: flex; align-items: end; justify-content: space-between; gap: 20px; margin-bottom: 20px; }
+  .sh h2 { font: 600 28px var(--display); letter-spacing: -.02em; margin: 6px 0 0; }
+  .sh p { margin: 6px 0 0; color: var(--muted); max-width: 640px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: var(--r); backdrop-filter: blur(10px); }
+  .pad { padding: 20px 22px; }
+
+  /* lab console */
+  .console { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .viewport { position: relative; aspect-ratio: 1; border-radius: 14px; overflow: hidden; background: #000; border: 1px solid var(--line); }
+  .viewport canvas { width: 100%; height: 100%; display: block; }
+  .viewport .badge { position: absolute; left: 12px; top: 12px; }
+  .ctl label { display: grid; grid-template-columns: 112px 1fr 88px; align-items: center; gap: 12px; margin: 12px 0; color: var(--muted); font-size: 13px; }
+  .ctl output { font: 500 12.5px var(--mono); color: var(--ink); text-align: right; }
+  input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 4px; border-radius: 4px; background: linear-gradient(90deg, var(--blue), var(--cyan)); outline: none; }
+  input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; background: #fff; box-shadow: 0 0 0 4px rgba(61,139,255,.35); cursor: pointer; }
+  .switches { display: flex; gap: 8px; flex-wrap: wrap; margin: 6px 0 4px; }
+  .chip { cursor: pointer; user-select: none; font: 500 12px var(--sans); padding: 6px 11px; border-radius: 999px; border: 1px solid var(--line-2); color: var(--muted); background: rgba(255,255,255,.03); }
+  .chip.on { color: #031018; background: var(--cyan); border-color: transparent; }
+  .eyes { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
+  .eye { border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; background: rgba(255,255,255,.02); }
+  .eye h4 { margin: 0 0 8px; font: 600 11px var(--mono); letter-spacing: .12em; text-transform: uppercase; }
+  .eye.l h4 { color: var(--blue); } .eye.r h4 { color: var(--amber); }
+  .kv { display: grid; grid-template-columns: 1fr auto; gap: 3px 10px; font-size: 12.5px; color: var(--muted); }
+  .kv span:nth-child(even) { font-family: var(--mono); color: var(--ink); text-align: right; }
+
+  /* gallery */
+  .grid10 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+  .tile { position: relative; border-radius: 14px; overflow: hidden; cursor: zoom-in; border: 1px solid var(--line); background: #000; transition: transform .2s, box-shadow .2s; }
+  .tile:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(0,0,0,.5), 0 0 0 1px rgba(61,139,255,.35); }
+  .tile img { width: 100%; display: block; }
+  .tile svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  .tile .cap { position: absolute; inset: auto 0 0 0; padding: 8px 10px; font: 500 11px var(--mono); display: flex; justify-content: space-between; background: linear-gradient(transparent, rgba(0,0,0,.85)); }
+  .ring { width: 180px; height: 180px; }
+
+  /* tables */
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  th, td { padding: 9px 12px; border-bottom: 1px solid var(--line); text-align: right; white-space: nowrap; }
+  th { color: var(--muted); font-weight: 500; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; }
+  th:first-child, td:first-child { text-align: left; }
+  td { font-family: var(--mono); }
+  tbody tr:hover { background: rgba(255,255,255,.03); }
+  pre { margin: 0; font: 12px/1.6 var(--mono); color: #c8d1de; white-space: pre; overflow: auto; }
+
+  /* directions */
+  .dirs { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+  .dir { overflow: hidden; }
+  .dir img { width: 100%; display: block; }
+  .dir .meta { padding: 12px 14px; }
+  .dir .row { display: flex; justify-content: space-between; align-items: center; }
+  .badge { font: 600 10.5px var(--mono); padding: 4px 9px; border-radius: 999px; letter-spacing: .08em; }
+  .badge.ok { background: rgba(47,212,160,.14); } .badge.bad { background: rgba(255,93,108,.14); }
+
+  /* lab */
+  .tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+  .lab-body { display: grid; grid-template-columns: 1.2fr 1fr; gap: 18px; }
+  .lab-body video, .lab-body .main-img { width: 100%; max-height: 460px; object-fit: cover; border-radius: 12px; border: 1px solid var(--line); background: #000; display: block; }
+  .strip { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; margin-top: 14px; }
+  .strip img { width: 100%; border-radius: 8px; display: block; cursor: zoom-in; }
+  .heat { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
+  .heat img { width: 100%; border-radius: 10px; border: 1px solid var(--line); }
+  .stat { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--line); color: var(--muted); }
+  .stat b { color: var(--ink); font: 500 13px var(--mono); }
+
+  /* security */
+  .guards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .guard { padding: 18px; }
+  .guard h4 { margin: 0 0 6px; font: 600 15px var(--display); display: flex; gap: 10px; align-items: center; }
+  .guard h4 i { width: 26px; height: 26px; border-radius: 8px; display: grid; place-items: center; font-style: normal; font-size: 13px; background: rgba(47,212,160,.12); color: var(--green); }
+  .guard p { margin: 0; color: var(--muted); font-size: 13px; }
+
+  footer { margin-top: 70px; border-top: 1px solid var(--line); padding: 28px 0 48px; color: var(--faint); font-size: 12.5px; }
+  footer .wrap { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+
+  /* lightbox */
+  .lb { position: fixed; inset: 0; z-index: 50; background: rgba(3,5,8,.92); display: none; place-items: center; backdrop-filter: blur(6px); }
+  .lb.on { display: grid; }
+  .lb img { max-width: min(88vw, 900px); max-height: 82vh; border-radius: 16px; box-shadow: 0 30px 90px rgba(0,0,0,.7); }
+  .lb .cap { margin-top: 14px; text-align: center; font: 500 13px var(--mono); color: var(--muted); }
+
+  .empty { color: var(--faint); padding: 26px; text-align: center; border: 1px dashed var(--line-2); border-radius: 14px; }
+  .reveal { opacity: 0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (max-width: 1100px) {
+    .hero, .console, .two, .lab-body { grid-template-columns: 1fr; }
+    .kpis { grid-template-columns: repeat(3, 1fr); }
+    .grid10, .dirs { grid-template-columns: repeat(2, 1fr); }
+    .guards { grid-template-columns: 1fr; }
+    header nav { display: none; }
+    h1 { font-size: 44px; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="logo"><i></i>EYEVERSE&nbsp;X</div>
+    <nav>
+      <a href="#console">Gaze console</a>
+      <a href="#sequence">Sequence</a>
+      <a href="#calibration">Calibration</a>
+      <a href="#directions">Directions</a>
+      <a href="#lab">Data lab</a>
+      <a href="#security">Guardrails</a>
+    </nav>
+    <span class="pill" id="buildpill">Track 1</span>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="hero">
+    <div>
+      <div class="eyebrow">Samsung XR Hackathon 2026 · Track 1</div>
+      <h1>Synthetic eyes,<br><span>pixel-true gaze.</span></h1>
+      <p class="lead">A calibrated binocular eye rig in Blender. Both eyes turn about their own centres onto a target 35&nbsp;cm away, a locked camera at 40&nbsp;cm records them, and every pupil is labelled to a hundredth of a pixel.</p>
+      <div class="cta">
+        <a class="btn primary" href="#console">Open the gaze console →</a>
+        <a class="btn" href="#sequence">Official renders</a>
+        <a class="btn" href="#lab">Data lab</a>
+      </div>
+    </div>
+    <div class="stage-hero" id="hero">
+      <img id="heroImg" alt="Rendered face following the pointer">
+      <svg id="heroSvg"></svg>
+      <div class="scan"></div>
+      <span class="hint">move your pointer, the eyes follow</span>
+      <span class="tag" id="heroTag">rest</span>
+    </div>
+  </div>
+
+  <div class="kpis" id="kpis"></div>
+
+  <section id="console" class="reveal">
+    <div class="sh"><div><div class="eyebrow">Interactive</div><h2>Gaze console</h2>
+      <p>Set a gaze and see where the pupils will land before anything is rendered. The maths here is a line-for-line port of the wrapper, and a test checks they agree.</p></div></div>
+    <div class="console">
+      <div class="card pad">
+        <div class="viewport"><canvas id="stage" width="1024" height="1024"></canvas><span class="badge pill">camera view · 40 cm</span></div>
+      </div>
+      <div class="card pad ctl">
+        <label>Horizontal h <input id="h" type="range" min="-1" max="1" step="0.01" value="0"><output id="ho"></output></label>
+        <label>Vertical v <input id="v" type="range" min="-1" max="1" step="0.01" value="0"><output id="vo"></output></label>
+        <label>Fixation <input id="d" type="range" min="15" max="200" step="1" value="35"><output id="do"></output></label>
+        <label>Luminance <input id="lum" type="range" min="-1" max="4" step="0.05" value="2"><output id="lo"></output></label>
+        <div class="switches">
+          <span class="chip" id="play">▶ clockwise sequence</span>
+          <span class="chip" id="saccade">saccades</span>
+          <span class="chip" id="reset">reset</span>
+        </div>
+        <div class="viewport" style="aspect-ratio: 16/10; margin-top: 12px"><canvas id="rays" width="960" height="600"></canvas><span class="badge pill">3D gaze rays · drag to orbit</span></div>
+        <div class="eyes" id="readout"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="sequence" class="reveal">
+    <div class="sh"><div><div class="eyebrow">Deliverable</div><h2>Official clockwise sequence</h2>
+      <p>θk = 2πk/10 with h = sin θ, v = cos θ, starting at the top. Dots mark the labelled pupil centres. Click any frame to enlarge it.</p></div>
+      <svg class="ring" id="ring" viewBox="-110 -110 220 220"></svg></div>
+    <div class="grid10" id="frames"></div>
+  </section>
+
+  <section id="calibration" class="reveal">
+    <div class="sh"><div><div class="eyebrow">Ground truth</div><h2>Calibration</h2>
+      <p>The camera model, per-frame labels and four independent error measures: analytic model vs the Blender scene, an image-space pupil detector, 3D gaze reconstructed from pixels, and the rig's own aim.</p></div></div>
+    <div class="two">
+      <div class="card pad"><h3 style="margin:0 0 12px;font:600 15px var(--display)">Camera</h3><pre id="cam"></pre></div>
+      <div class="card pad"><h3 style="margin:0 0 12px;font:600 15px var(--display)">Error report</h3><div id="errors"></div></div>
+    </div>
+    <div class="card" style="margin-top:16px;overflow:auto"><table id="table"></table></div>
+  </section>
+
+  <section id="directions" class="reveal">
+    <div class="sh"><div><div class="eyebrow">Pass / fail</div><h2>Direction check</h2>
+      <p>Each direction must move both pupils the right way, measured in pixels against the reset pose. Reset must return them exactly.</p></div></div>
+    <div class="dirs" id="dirs"></div>
+  </section>
+
+  <section id="lab" class="reveal">
+    <div class="sh"><div><div class="eyebrow">Beyond the brief</div><h2>Synthetic data lab</h2>
+      <p>Saccades and smooth pursuit with blinks, randomised identities and lighting, five camera viewpoints, a vergence sweep and 3D gaze-ray renders, each with automatic quality control.</p></div></div>
+    <div class="tabs" id="labtabs"></div>
+    <div id="labbody"></div>
+  </section>
+
+  <section id="security" class="reveal">
+    <div class="sh"><div><div class="eyebrow">Trust</div><h2>Guardrails</h2>
+      <p>Training data is only as good as its labels. These checks run on every frame and every job.</p></div></div>
+    <div class="guards" id="guards"></div>
+  </section>
+</main>
+
+<footer><div class="wrap">
+  <div>EYEVERSE X · Team The Tietans · Thapar Institute of Engineering and Technology</div>
+  <div class="mono" id="foot"></div>
+</div></footer>
+
+<div class="lb" id="lb"><div><img id="lbImg" alt=""><div class="cap" id="lbCap"></div></div></div>
+
+<script>// Gaze maths for the browser preview. Mirrors wrapper/gaze.py and wrapper/camera.py
+// so the live sliders show exactly what Blender would render.
+(function (root) {
+  const FORWARD = [0, -1, 0];
+
+  const sub = (a, b) => a.map((x, i) => x - b[i]);
+  const add = (a, b) => a.map((x, i) => x + b[i]);
+  const scale = (a, s) => a.map((x) => x * s);
+  const dot = (a, b) => a.reduce((s, x, i) => s + x * b[i], 0);
+  const cross = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
+  const norm = (a) => scale(a, 1 / Math.hypot(...a));
+
+  function fixationPoint(h, v, distance, span) {
+    return [h * span, -distance, v * span];
+  }
+
+  function arcQuat(a, b) {
+    a = norm(a); b = norm(b);
+    const d = Math.max(-1, Math.min(1, dot(a, b)));
+    const ax = cross(a, b);
+    const q = [1 + d, ...ax];
+    const n = Math.hypot(...q);
+    return q.map((x) => x / n);
+  }
+
+  function quatMatrix([w, x, y, z]) {
+    return [
+      [1 - 2 * (y * y + z * z), 2 * (x * y - w * z), 2 * (x * z + w * y)],
+      [2 * (x * y + w * z), 1 - 2 * (x * x + z * z), 2 * (y * z - w * x)],
+      [2 * (x * z - w * y), 2 * (y * z + w * x), 1 - 2 * (x * x + y * y)],
+    ];
+  }
+
+  function eulerXYZ(m) {
+    const sy = Math.max(-1, Math.min(1, -m[2][0]));
+    return [Math.atan2(m[2][1], m[2][2]), Math.asin(sy), Math.atan2(m[1][0], m[0][0])];
+  }
+
+  function project(p, K, w2c) {
+    const c = [0, 1, 2].map((i) => dot(w2c[i].slice(0, 3), p) + w2c[i][3]);
+    return [K[0][0] * c[0] / c[2] + K[0][2], K[1][1] * c[1] / c[2] + K[1][2]];
+  }
+
+  function solve(h, v, opts) {
+    const t = fixationPoint(h, v, opts.distance, opts.span);
+    const eyes = {};
+    for (const side of ["L", "R"]) {
+      const c = opts.centres[side];
+      const d = norm(sub(t, c));
+      const q = arcQuat(FORWARD, d);
+      const pupil = add(c, scale(d, opts.radius));
+      eyes[side] = {
+        centre: c, direction: d, quaternion: q, euler: eulerXYZ(quatMatrix(q)), pupil,
+        uv: opts.K ? project(pupil, opts.K, opts.w2c) : null,
+        yaw: (Math.atan2(d[0], -d[1]) * 180) / Math.PI,
+        pitch: (Math.asin(d[2]) * 180) / Math.PI,
+      };
+    }
+    const vergence = (Math.acos(Math.max(-1, Math.min(1, dot(eyes.L.direction, eyes.R.direction)))) * 180) / Math.PI;
+    return { target: t, eyes, vergence };
+  }
+
+  function pupilDiameter(luminance) {
+    const d = 4.9 - 3 * Math.tanh(0.4 * Math.log10(Math.max(luminance, 1e-4)));
+    return Math.min(8, Math.max(2, d));
+  }
+
+  const api = { solve, project, pupilDiameter, fixationPoint };
+  if (typeof module !== "undefined") module.exports = api;
+  else root.Gaze = api;
+})(this);
+</script>
+<script>
+"use strict";
+const DATA = {"frames": [{"frame": 0, "theta": 0.0, "input": {"h": 0.0, "v": 1.0}, "eye_rotation_L": [-0.141333, -0.006294, -0.088864], "eye_rotation_R": [-0.14134, 0.006294, 0.088861], "pupil_center_2D_L": [812.9077, 492.9793], "pupil_center_2D_R": [211.1003, 493.0201], "camera_matrix": {"K": [[3840.0, 0.0, 512.0], [0.0, 3840.0, 512.0], [0.0, 0.0, 1.0]], "world_to_camera": [[1.0, 0.0, 0.0, 0.0], [0.0, -7.5e-08, -1.0, -3e-08], [0.0, 1.0, -7.5e-08, 0.400000006], [0.0, 0.0, 0.0, 1.0]], "image_size": [1024, 1024], "lens_mm": 135.0, "sensor_mm": 36.0, "fov_deg": 15.1893, "convention": "OpenCV (x right, y down, z forward); pixel origin at top-left corner"}, "fixation_point": [0.0, -0.35, 0.05], "fixation_distance": 0.35, "gaze_vector_L": [-0.088746, -0.986044, 0.14086], "gaze_vector_R": [0.088743, -0.986043, 0.140867], "eye_center_L": [0.0315, -5e-06, 2e-06], "eye_center_R": [-0.0315, 5e-06, -2e-06], "pupil_center_3D_L": [0.030295, -0.013396, 0.001915], "pupil_center_3D_R": [-0.030295, -0.013385, 0.001911], "pupil_diameter_mm": 4.0, "pupil_visibility_L": 1.0, "pupil_visibility_R": 1.0, "vergence_deg": 10.1828, "lid_closure": 0.0, "aim_error_deg": 3.9e-05, "projection_check_px": 2.8e-05, "camera": "EyeCam", "image": "renders/frame_00.png", "src": "../renders/frame_00.png"}, {"frame": 1, "theta": 0.628319, "input": {"h": 0.587785, "v": 0.809017}, "eye_rotation_L": [-0.115058, -0.000345, -0.005991], "eye_rotation_R": [-0.113385, 0.009736, 0.171134], "pupil_center_2D_L": [824.1504, 496.4899], "pupil_center_2D_R": [222.1727, 496.7641], "camera_matrix": {"K": [[3840.0, 0.0, 512.0], [0.0, 3840.0, 512.0], [0.0, 0.0, 1.0]], "world_to_camera": [[1.0, 0.0, 0.0, 0.0], [0.0, -7.5e-08, -1.0, -3e-08], [0.0, 1.0, -7.5e-08, 0.400000006], [0.0, 0.0, 0.0, 1.0]], "image_size": [1024, 1024], "lens_mm": 135.0, "sensor_mm": 36.0, "fov_deg": 15.1893, "convention": "OpenCV (x right, y down, z forward); pixel origin at top-left corner"}, "fixation_point": [0.029389, -0.35, 0.040451], "fixation_distance": 0.35, "gaze_vector_L": [-0.005991, -0.99337, 0.114804], "gaze_vector_R": [0.170292, -0.978877, 0.113137], "eye_center_L": [0.0315, -5e-06, 2e-06], "eye_center_R": [-0.0315, 5e-06, -2e-06], "pupil_center_3D_L": [0.031419, -0.013495, 0.001561], "pupil_center_3D_R": [-0.029187, -0.013288, 0.001534], "pupil_diameter_mm": 4.0, "pupil_visibility_L": 1.0, "pupil_visibility_R": 1.0, "vergence_deg": 10.1481, "lid_closure": 0.0, "aim_error_deg": 2.5e-05, "projection_check_px": 2.2e-05, "camera": "EyeCam", "image": "renders/frame_01.png", "src": "../renders/frame_01.png"}, {"frame": 2, "theta": 1.256637, "input": {"h": 0.951057, "v": 0.309017}, "eye_rotation_L": [-0.044065, 0.001009, 0.045789], "eye_rotation_R": [-0.04304, 0.004796, 0.221928], "pupil_center_2D_L": [831.1861, 506.0356], "pupil_center_2D_R": [228.9336, 506.2193], "camera_matrix": {"K": [[3840.0, 0.0, 512.0], [0.0, 3840.0, 512.0], [0.0, 0.0, 1.0]], "world_to_camera": [[1.0, 0.0, 0.0, 0.0], [0.0, -7.5e-08, -1.0, -3e-08], [0.0, 1.0, -7.5e-08, 0.400000006], [0.0, 0.0, 0.0, 1.0]], "image_size": [1024, 1024], "lens_mm": 135.0, "sensor_mm": 36.0, "fov_deg": 15.1893, "convention": "OpenCV (x right, y down, z forward); pixel origin at top-left corner"}, "fixation_point": [0.047553, -0.35, 0.015451], "fixation_distance": 0.35, "gaze_vector_L": [0.045773, -0.99798, 0.044051], "gaze_vector_R": [0.220108, -0.974526, 0.043026], "eye_center_L": [0.0315, -5e-06, 2e-06], "eye_center_R": [-0.0315, 5e-06, -2e-06], "pupil_center_3D_L": [0.032122, -0.013558, 0.0006], "pupil_center_3D_R": [-0.028511, -0.013229, 0.000582], "pupil_diameter_mm": 4.0, "pupil_visibility_L": 1.0, "pupil_visibility_R": 1.0, "vergence_deg": 10.0919, "lid_closure": 0.0, "aim_error_deg": 1.5e-05, "projection_check_px": 2.4e-05, "camera": "EyeCam", "image": "renders/frame_02.png", "src": "../renders/frame_02.png"}, {"frame": 3, "theta": 1.884956, "input": {"h": 0.951057, "v": -0.309017}, "eye_rotation_L": [0.044077, -0.001009, 0.045789], "eye_rotation_R": [0.043028, -0.004795, 0.221928], "pupil_center_2D_L": [831.1861, 517.9256], "pupil_center_2D_R": [228.9336, 517.8195], "camera_matrix": {"K": [[3840.0, 0.0, 512.0], [0.0, 3840.0, 512.0], [0.0, 0.0, 1.0]], "world_to_camera": [[1.0, 0.0, 0.0, 0.0], [0.0, -7.5e-08, -1.0, -3e-08], [0.0, 1.0, -7.5e-08, 0.400000006], [0.0, 0.0, 0.0, 1.0]], "image_size": [1024, 1024], "lens_mm": 135.0, "sensor_mm": 36.0, "fov_deg": 15.1893, "convention": "OpenCV (x right, y down, z forward); pixel origin at top-left corner"}, "fixation_point": [0.047553, -0.35, -0.015451], "fixation_distance": 0.35, "gaze_vector_L": [0.045773, -0.99798, -0.044063], "gaze_vector_R": [0.220108, -0.974527, -0.043014], "eye_center_L": [0.0315, -5e-06, 2e-06], "eye_center_R": [-0.0315, 5e-06, -2e-06], "pupil_center_3D_L": [0.032122, -0.013558, -0.000596], "pupil_center_3D_R": [-0.028511, -0.013229, -0.000586], "pupil_diameter_mm": 4.0, "pupil_visibility_L": 1.0, "pupil_visibility_R": 1.0, "vergence_deg": 10.0919, "lid_closure": 0.0, "aim_error_deg": 2.9e-05, "projection_check_px": 1.5e-05, "camera": "EyeCam", "image": "renders/frame_03.png", "src": "../renders/frame_03.png"}, {"frame": 4, "theta": 2.513274, "input": {"h": 0.587785, "v": -0.809017}, "eye_rotation_L": [0.115069, 0.000345, -0.005991], "eye_rotation_R": [0.113374, -0.009735, 0.171134], "pupil_center_2D_L": [824.1504, 527.4707], "pupil_center_2D_R": [222.1728, 527.2753], "camera_matrix": {"K": [[3840.0, 0.0, 512.0], [0.0, 3840.0, 512.0], [0.0, 0.0, 1.0]], "world_to_camera": [[1.0, 0.0, 0.0, 0.0], [0.0, -7.5e-08, -1.0, -3e-08], [0.0, 1.0, -7.5e-08, 0.400000006], [0.0, 0.0, 0.0, 1.0]], "image_size": [1024, 1024], "lens_mm": 135.0, "sensor_mm": 36.0, "fov_deg": 15.1893, "convention": "OpenCV (x right, y down, z forward); pixel origin at top-left corner"}, "fixation_point": [0.029389, -0.35, -0.040451], "fixation_distance": 0.35, "gaze_vector_L": [-0.005991, -0.993369, -0.114815], "gaze_vector_R": [0.170292, -0.978878, -0.113126], "eye_center_L": [0.0315, -5e-06, 2e-06], "eye_center_R": [-0.0315, 5e-06, -2e-06], "pupil_center_3D_L": [0.031419, -0.013495, -0.001557], "pupil_center_3D_R": [-0.029187, -0.013288, -0.001538], "pupil_diameter_mm": 4.0, "pupil_visibility_L": 1.0, "pupil_visibility_R": 1.0, "vergence_deg": 10.1481, "lid_closure": 0.0, "aim_error_deg": 5e-05, "projection_check_px": 3.2e-05, "camera": "EyeCam", "image": "renders/frame_04.png", "src": "../renders/frame_04.png"}, {"frame": 5, "theta": 3.141593, "input": {"h": 0.0, "v": -1.0}, "eye_rotation_L": [0.141344, 0.006295, -0.088864], "eye_rotation_R": [0.141329, -0.006294, 0.088861], "pupil_center_2D_L": [812.9076, 530.9813], "pupil_center_2D_R": [211.1003, 531.0187], "camera_matrix": {"K": [[3840.0, 0.0, 512.0], [0.0, 3840.0, 512.0], [0.0, 0.0, 1.0]], "world_to_camera": [[1.0, 0.0, 0.0, 0.0], [0.0, -7.5e-08, -1.0, -3e-08], [0.0, 1.0, -7.5e-08, 0.400000006], [0.0, 0.0, 0.0, 1.0]], "image_size": [1024, 1024], "lens_mm": 135.0, "sensor_mm": 36.0, "fov_deg": 15.1893, "convention": "OpenCV (x right, y down, z forward); pixel origin at top-left corner"}, "fixation_point": [0.0, -0.35, -0.05], "fixation_distance": 0.35, "gaze_vector_L": [-0.088745, -0.986042, -0.140871], "gaze_vector_R": [0.088743, -0.986045, -0.140856], "eye_center_L": [0.0315, -5e-06, 2e-06], "eye_center_R": [-0.0315, 5e-06, -2e-06], "pupil_center_3D_L": [0.030295, -0.013396, -0.001911], "pupil_center_3D_R": [-0.030295, -0.013385, -0.001915], "pupil_diameter_mm": 4.0, "pupil_visibility_L": 1.0, "pupil_visibility_R": 1.0, "vergence_deg": 10.1827, "lid_closure": 0.0, "aim_error_deg": 3.1e-05, "projection_check_px": 9e-06, "camera": "EyeCam", "image": "renders/frame_05.png", "src": "../renders/frame_05.png"}, {"frame": 6, "theta": 3.769911, "input": {"h": -0.587785, "v": -0.809017}, "eye_rotation_L": [0.113388, 0.009737, -0.171139], "eye_rotation_R": [0.115054, -0.000345, 0.005991], "pupil_center_2D_L": [801.8346, 527.2373], "pupil_center_2D_R": [199.8582, 527.5088], "camera_matrix": {"K": [[3840.0, 0.0, 512.0], [0.0, 3840.0, 512.0], [0.0, 0.0, 1.0]], "world_to_camera": [[1.0, 0.0, 0.0, 0.0], [0.0, -7.5e-08, -1.0, -3e-08], [0.0, 1.0, -7.5e-08, 0.400000006], [0.0, 0.0, 0.0, 1.0]], "image_size": [1024, 1024], "lens_mm": 135.0, "sensor_mm": 36.0, "fov_deg": 15.1893, "convention": "OpenCV (x right, y down, z forward); pixel origin at top-left corner"}, "fixation_point": [-0.029389, -0.35, -0.040451], "fixation_distance": 0.35, "gaze_vector_L": [-0.170297, -0.978876, -0.11314], "gaze_vector_R": [0.005991, -0.993371, -0.1148], "eye_center_L": [0.0315, -5e-06, 2e-06], "eye_center_R": [-0.0315, 5e-06, -2e-06], "pupil_center_3D_L": [0.029187, -0.013299, -0.001534], "pupil_center_3D_R": [-0.031419, -0.013485, -0.001561], "pupil_diameter_mm": 4.0, "pupil_visibility_L": 1.0, "pupil_visibility_R": 1.0, "vergence_deg": 10.1483, "lid_closure": 0.0, "aim_error_deg": 2.3e-05, "projection_check_px": 2.1e-05, "camera": "EyeCam", "image": "renders/frame_06.png", "src": "../renders/frame_06.png"}, {"frame": 7, "theta": 4.39823, "input": {"h": -0.951057, "v": -0.309017}, "eye_rotation_L": [0.043041, 0.004797, -0.221934], "eye_rotation_R": [0.044064, 0.001009, -0.045788], "pupil_center_2D_L": [795.0734, 517.7808], "pupil_center_2D_R": [192.8229, 517.9644], "camera_matrix": {"K": [[3840.0, 0.0, 512.0], [0.0, 3840.0, 512.0], [0.0, 0.0, 1.0]], "world_to_camera": [[1.0, 0.0, 0.0, 0.0], [0.0, -7.5e-08, -1.0, -3e-08], [0.0, 1.0, -7.5e-08, 0.400000006], [0.0, 0.0, 0.0, 1.0]], "image_size": [1024, 1024], "lens_mm": 135.0, "sensor_mm": 36.0, "fov_deg": 15.1893, "convention": "OpenCV (x right, y down, z forward); pixel origin at top-left corner"}, "fixation_point": [-0.047553, -0.35, -0.015451], "fixation_distance": 0.35, "gaze_vector_L": [-0.220115, -0.974525, -0.043027], "gaze_vector_R": [-0.045772, -0.99798, -0.04405], "eye_center_L": [0.0315, -5e-06, 2e-06], "eye_center_R": [-0.0315, 5e-06, -2e-06], "pupil_center_3D_L": [0.028511, -0.013239, -0.000582], "pupil_center_3D_R": [-0.032122, -0.013547, -0.0006], "pupil_diameter_mm": 4.0, "pupil_visibility_L": 1.0, "pupil_visibility_R": 1.0, "vergence_deg": 10.0923, "lid_closure": 0.0, "aim_error_deg": 3e-05, "projection_check_px": 2.2e-05, "camera": "EyeCam", "image": "renders/frame_07.png", "src": "../renders/frame_07.png"}, {"frame": 8, "theta": 5.026548, "input": {"h": -0.951057, "v": 0.309017}, "eye_rotation_L": [-0.04303, -0.004795, -0.221935], "eye_rotation_R": [-0.044076, -0.001009, -0.045788], "pupil_center_2D_L": [795.0733, 506.1798], "pupil_center_2D_R": [192.8229, 506.0745], "camera_matrix": {"K": [[3840.0, 0.0, 512.0], [0.0, 3840.0, 512.0], [0.0, 0.0, 1.0]], "world_to_camera": [[1.0, 0.0, 0.0, 0.0], [0.0, -7.5e-08, -1.0, -3e-08], [0.0, 1.0, -7.5e-08, 0.400000006], [0.0, 0.0, 0.0, 1.0]], "image_size": [1024, 1024], "lens_mm": 135.0, "sensor_mm": 36.0, "fov_deg": 15.1893, "convention": "OpenCV (x right, y down, z forward); pixel origin at top-left corner"}, "fixation_point": [-0.047553, -0.35, 0.015451], "fixation_distance": 0.35, "gaze_vector_L": [-0.220115, -0.974525, 0.043016], "gaze_vector_R": [-0.045772, -0.99798, 0.044061], "eye_center_L": [0.0315, -5e-06, 2e-06], "eye_center_R": [-0.0315, 5e-06, -2e-06], "pupil_center_3D_L": [0.028511, -0.013239, 0.000586], "pupil_center_3D_R": [-0.032122, -0.013547, 0.000596], "pupil_diameter_mm": 4.0, "pupil_visibility_L": 1.0, "pupil_visibility_R": 1.0, "vergence_deg": 10.0923, "lid_closure": 0.0, "aim_error_deg": 2.5e-05, "projection_check_px": 3e-05, "camera": "EyeCam", "image": "renders/frame_08.png", "src": "../renders/frame_08.png"}, {"frame": 9, "theta": 5.654867, "input": {"h": -0.587785, "v": 0.809017}, "eye_rotation_L": [-0.113377, -0.009736, -0.171139], "eye_rotation_R": [-0.115066, 0.000345, 0.005991], "pupil_center_2D_L": [801.8346, 496.7239], "pupil_center_2D_R": [199.8582, 496.5301], "camera_matrix": {"K": [[3840.0, 0.0, 512.0], [0.0, 3840.0, 512.0], [0.0, 0.0, 1.0]], "world_to_camera": [[1.0, 0.0, 0.0, 0.0], [0.0, -7.5e-08, -1.0, -3e-08], [0.0, 1.0, -7.5e-08, 0.400000006], [0.0, 0.0, 0.0, 1.0]], "image_size": [1024, 1024], "lens_mm": 135.0, "sensor_mm": 36.0, "fov_deg": 15.1893, "convention": "OpenCV (x right, y down, z forward); pixel origin at top-left corner"}, "fixation_point": [-0.029389, -0.35, 0.040451], "fixation_distance": 0.35, "gaze_vector_L": [-0.170297, -0.978877, 0.113129], "gaze_vector_R": [0.005991, -0.993369, 0.114812], "eye_center_L": [0.0315, -5e-06, 2e-06], "eye_center_R": [-0.0315, 5e-06, -2e-06], "pupil_center_3D_L": [0.029187, -0.013299, 0.001538], "pupil_center_3D_R": [-0.031419, -0.013485, 0.001557], "pupil_diameter_mm": 4.0, "pupil_visibility_L": 1.0, "pupil_visibility_R": 1.0, "vergence_deg": 10.1484, "lid_closure": 0.0, "aim_error_deg": 3.1e-05, "projection_check_px": 2.9e-05, "camera": "EyeCam", "image": "renders/frame_09.png", "src": "../renders/frame_09.png"}], "report": {"schema_problems": [], "clockwise": true, "pupil_angles_deg": [0.0, 35.97, 71.98, 108.02, 144.03, 180.0, 215.97, 251.98, 288.02, 324.03], "model_vs_scene_px": {"mean": 0.0008, "max": 0.0017}, "detected_vs_truth_px": {"mean": 0.3055, "max": 0.795}, "gaze_reconstruction_deg": {"mean": 0.1304, "max": 0.3398}, "max_aim_error_deg": 5e-05, "directions": {"min_shift_px": 3.0, "directions": {"left": {"input": [-1.0, 0.0], "shift_px": {"L": [-18.725, 0.0], "R": [-19.246, 0.0]}, "pass": true}, "right": {"input": [1.0, 0.0], "shift_px": {"L": [19.247, 0.0], "R": [18.724, 0.0]}, "pass": true}, "up": {"input": [0.0, 1.0], "shift_px": {"L": [0.016, -19.001], "R": [-0.016, -18.999]}, "pass": true}, "down": {"input": [0.0, -1.0], "shift_px": {"L": [0.015, 19.001], "R": [-0.016, 19.0]}, "pass": true}, "reset": {"input": [0.0, 0.0], "return_error_px": 0.0, "pass": true}}, "passed": 5, "of": 5}, "camera": {"K": [[3840.0, 0.0, 512.0], [0.0, 3840.0, 512.0], [0.0, 0.0, 1.0]], "world_to_camera": [[1.0, 0.0, 0.0, 0.0], [0.0, -7.5e-08, -1.0, -3e-08], [0.0, 1.0, -7.5e-08, 0.400000006], [0.0, 0.0, 0.0, 1.0]], "image_size": [1024, 1024], "lens_mm": 135.0, "sensor_mm": 36.0, "fov_deg": 15.1893, "convention": "OpenCV (x right, y down, z forward); pixel origin at top-left corner"}, "frames": [{"frame": 0, "h": 0.0, "v": 1.0, "aim_error_deg": 3.9e-05, "vergence_deg": 10.1828, "model_vs_scene_px_L": 0.0003, "detected_vs_truth_px_L": 0.795, "gaze_reconstruction_deg_L": 0.3398, "pupil_L": [812.91, 492.98], "detected_L": [812.502, 493.663], "model_vs_scene_px_R": 0.0017, "detected_vs_truth_px_R": 0.174, "gaze_reconstruction_deg_R": 0.0746, "pupil_R": [211.1, 493.02], "detected_R": [211.124, 492.848]}, {"frame": 1, "h": 0.587785, "v": 0.809017, "aim_error_deg": 2.5e-05, "vergence_deg": 10.1481, "model_vs_scene_px_L": 0.0007, "detected_vs_truth_px_L": 0.503, "gaze_reconstruction_deg_L": 0.2147, "pupil_L": [824.15, 496.49], "detected_L": [824.179, 496.992], "model_vs_scene_px_R": 0.0008, "detected_vs_truth_px_R": 0.507, "gaze_reconstruction_deg_R": 0.2156, "pupil_R": [222.17, 496.76], "detected_R": [222.673, 496.843]}, {"frame": 2, "h": 0.951057, "v": 0.309017, "aim_error_deg": 1.5e-05, "vergence_deg": 10.0919, "model_vs_scene_px_L": 0.0004, "detected_vs_truth_px_L": 0.444, "gaze_reconstruction_deg_L": 0.1887, "pupil_L": [831.19, 506.04], "detected_L": [831.455, 506.389], "model_vs_scene_px_R": 0.001, "detected_vs_truth_px_R": 0.255, "gaze_reconstruction_deg_R": 0.1091, "pupil_R": [228.93, 506.22], "detected_R": [229.167, 506.321]}, {"frame": 3, "h": 0.951057, "v": -0.309017, "aim_error_deg": 2.9e-05, "vergence_deg": 10.0919, "model_vs_scene_px_L": 0.0004, "detected_vs_truth_px_L": 0.193, "gaze_reconstruction_deg_L": 0.0816, "pupil_L": [831.19, 517.93], "detected_L": [831.141, 518.113], "model_vs_scene_px_R": 0.0004, "detected_vs_truth_px_R": 0.237, "gaze_reconstruction_deg_R": 0.1016, "pupil_R": [228.93, 517.82], "detected_R": [229.069, 518.014]}, {"frame": 4, "h": 0.587785, "v": -0.809017, "aim_error_deg": 5e-05, "vergence_deg": 10.1481, "model_vs_scene_px_L": 0.0003, "detected_vs_truth_px_L": 0.173, "gaze_reconstruction_deg_L": 0.0735, "pupil_L": [824.15, 527.47], "detected_L": [824.061, 527.619], "model_vs_scene_px_R": 0.001, "detected_vs_truth_px_R": 0.071, "gaze_reconstruction_deg_R": 0.0304, "pupil_R": [222.17, 527.28], "detected_R": [222.137, 527.336]}, {"frame": 5, "h": 0.0, "v": -1.0, "aim_error_deg": 3.1e-05, "vergence_deg": 10.1827, "model_vs_scene_px_L": 0.0007, "detected_vs_truth_px_L": 0.39, "gaze_reconstruction_deg_L": 0.1676, "pupil_L": [812.91, 530.98], "detected_L": [812.832, 530.599], "model_vs_scene_px_R": 0.0006, "detected_vs_truth_px_R": 0.762, "gaze_reconstruction_deg_R": 0.3266, "pupil_R": [211.1, 531.02], "detected_R": [211.127, 530.257]}, {"frame": 6, "h": -0.587785, "v": -0.809017, "aim_error_deg": 2.3e-05, "vergence_deg": 10.1483, "model_vs_scene_px_L": 0.0012, "detected_vs_truth_px_L": 0.104, "gaze_reconstruction_deg_L": 0.0453, "pupil_L": [801.83, 527.24], "detected_L": [801.901, 527.157], "model_vs_scene_px_R": 0.0009, "detected_vs_truth_px_R": 0.113, "gaze_reconstruction_deg_R": 0.0487, "pupil_R": [199.86, 527.51], "detected_R": [199.808, 527.61]}, {"frame": 7, "h": -0.951057, "v": -0.309017, "aim_error_deg": 3e-05, "vergence_deg": 10.0923, "model_vs_scene_px_L": 0.0004, "detected_vs_truth_px_L": 0.093, "gaze_reconstruction_deg_L": 0.0395, "pupil_L": [795.07, 517.78], "detected_L": [795.01, 517.849], "model_vs_scene_px_R": 0.0009, "detected_vs_truth_px_R": 0.166, "gaze_reconstruction_deg_R": 0.071, "pupil_R": [192.82, 517.96], "detected_R": [192.837, 518.13]}, {"frame": 8, "h": -0.951057, "v": 0.309017, "aim_error_deg": 2.5e-05, "vergence_deg": 10.0923, "model_vs_scene_px_L": 0.0003, "detected_vs_truth_px_L": 0.136, "gaze_reconstruction_deg_L": 0.0577, "pupil_L": [795.07, 506.18], "detected_L": [795.044, 506.313], "model_vs_scene_px_R": 0.0004, "detected_vs_truth_px_R": 0.271, "gaze_reconstruction_deg_R": 0.1152, "pupil_R": [192.82, 506.07], "detected_R": [192.653, 506.286]}, {"frame": 9, "h": -0.587785, "v": 0.809017, "aim_error_deg": 3.1e-05, "vergence_deg": 10.1484, "model_vs_scene_px_L": 0.0012, "detected_vs_truth_px_L": 0.24, "gaze_reconstruction_deg_L": 0.1014, "pupil_L": [801.83, 496.72], "detected_L": [801.598, 496.761], "model_vs_scene_px_R": 0.0017, "detected_vs_truth_px_R": 0.483, "gaze_reconstruction_deg_R": 0.205, "pupil_R": [199.86, 496.53], "detected_R": [199.519, 496.874]}], "datasets": {"cameras": {"frames": 25, "quality": {"frames": 25, "images_ok": 25, "in_bounds": 25, "visible": 25, "detector_checked": 25, "detector_agree": 23, "detector_median_px": 0.32, "flagged": 2}}, "identities": {"frames": 30, "quality": {"frames": 30, "images_ok": 30, "in_bounds": 30, "visible": 30, "detector_checked": 30, "detector_agree": 30, "detector_median_px": 0.127, "flagged": 0}}, "pursuit": {"frames": 45, "quality": {"frames": 45, "images_ok": 45, "in_bounds": 45, "visible": 42, "detector_checked": 42, "detector_agree": 42, "detector_median_px": 0.16, "flagged": 0}, "heatmaps": ["heatmap_pursuit_target.png", "heatmap_pursuit_pupils.png"]}, "random": {"frames": 24, "quality": {"frames": 24, "images_ok": 24, "in_bounds": 24, "visible": 16, "detector_checked": 13, "detector_agree": 12, "detector_median_px": 0.466, "flagged": 1}, "heatmaps": ["heatmap_random_pupils.png", "heatmap_random_target.png"]}, "rays": {"frames": 10, "quality": {"frames": 10, "images_ok": 10, "in_bounds": 10, "visible": 0, "detector_checked": 0, "detector_agree": 0, "detector_median_px": null, "flagged": 0}}, "saccade": {"frames": 57, "quality": {"frames": 57, "images_ok": 57, "in_bounds": 57, "visible": 50, "detector_checked": 50, "detector_agree": 50, "detector_median_px": 0.137, "flagged": 0}, "heatmaps": ["heatmap_saccade_target.png", "heatmap_saccade_pupils.png"]}, "vergence": {"frames": 9, "quality": {"frames": 9, "images_ok": 9, "in_bounds": 9, "visible": 9, "detector_checked": 9, "detector_agree": 9, "detector_median_px": 0.141, "flagged": 0}}}}, "build": {"eye_proxy": "Human.high-poly", "shape_keys_baked": 9, "face_vertices_in": 14380, "vertex_groups": ["HelperGeometry", "JointCubes", "Left", "Mid", "Right", "body", "nippleTip", "nipple", "lips", "fingernails", "toenails", "ears", "scalp", "genitals", "root", "pelvis.L", "upperleg01.L", "upperleg02.L", "lowerleg01.L", "lowerleg02.L", "foot.L", "toe1-1.L", "toe1-2.L", "toe2-1.L", "toe2-2.L", "toe2-3.L", "toe3-1.L", "toe3-2.L", "toe3-3.L", "toe4-1.L", "toe4-2.L", "toe4-3.L", "toe5-1.L", "toe5-2.L", "toe5-3.L", "pelvis.R", "upperleg01.R", "upperleg02.R", "lowerleg01.R", "lowerleg02.R", "foot.R", "toe1-1.R", "toe1-2.R", "toe2-1.R", "toe2-2.R", "toe2-3.R", "toe3-1.R", "toe3-2.R", "toe3-3.R", "toe4-1.R", "toe4-2.R", "toe4-3.R", "toe5-1.R", "toe5-2.R", "toe5-3.R", "spine05", "spine04", "spine03", "spine02", "breast.L", "breast.R", "spine01", "clavicle.L", "shoulder01.L", "upperarm01.L", "upperarm02.L", "lowerarm01.L", "lowerarm02.L", "wrist.L", "finger1-1.L", "finger1-2.L", "finger1-3.L", "metacarpal1.L", "finger2-1.L", "finger2-2.L", "finger2-3.L", "metacarpal2.L", "finger3-1.L", "finger3-2.L", "finger3-3.L"], "face_vertices_kept": 5069, "source_ipd_m": 0.057992, "scale": 1.086359, "eye_radius_m": 0.01358, "lid_margin": {"L": {"before": [10.49, -24.55], "after": [19.85, -25.62]}, "R": {"before": [10.56, -24.57], "after": [19.87, -24.76]}}, "lids": {"L": {"upper_deg": 10.51, "lower_deg": -24.96}, "R": {"upper_deg": 10.52, "lower_deg": -24.92}}, "exposure": -3.549384117126465, "blender": "5.3.0"}, "directions": {"min_shift_px": 3.0, "directions": {"left": {"input": [-1.0, 0.0], "shift_px": {"L": [-18.725, 0.0], "R": [-19.246, 0.0]}, "pass": true}, "right": {"input": [1.0, 0.0], "shift_px": {"L": [19.247, 0.0], "R": [18.724, 0.0]}, "pass": true}, "up": {"input": [0.0, 1.0], "shift_px": {"L": [0.016, -19.001], "R": [-0.016, -18.999]}, "pass": true}, "down": {"input": [0.0, -1.0], "shift_px": {"L": [0.015, 19.001], "R": [-0.016, 19.0]}, "pass": true}, "reset": {"input": [0.0, 0.0], "return_error_px": 0.0, "pass": true}}, "passed": 5, "of": 5}, "directionImages": {"reset": "../output/directions/reset.png", "left": "../output/directions/left.png", "right": "../output/directions/right.png", "up": "../output/directions/up.png", "down": "../output/directions/down.png"}, "sheet": "../contact_sheet.png", "lab": [{"mode": "cameras", "meta": {"mode": "cameras", "engine": "cycles", "size": 448, "seed": 2026, "fps": null, "seconds": 96.5, "frames": 25, "created": "2026-11-20 00:36:55"}, "count": 25, "sample": [{"src": "../output/cameras/images/EyeCam_rest.png", "h": 0.0, "v": 0.0, "event": "rest", "label": ""}, {"src": "../output/cameras/images/EyeCam_right.png", "h": 1.0, "v": 0.0, "event": "right", "label": ""}, {"src": "../output/cameras/images/EyeCam_down.png", "h": 0.0, "v": -1.0, "event": "down", "label": ""}, {"src": "../output/cameras/images/EyeCam_Left_left.png", "h": -1.0, "v": 0.0, "event": "left", "label": ""}, {"src": "../output/cameras/images/EyeCam_Left_up.png", "h": 0.0, "v": 1.0, "event": "up", "label": ""}, {"src": "../output/cameras/images/EyeCam_Right_rest.png", "h": 0.0, "v": 0.0, "event": "rest", "label": ""}, {"src": "../output/cameras/images/EyeCam_Right_right.png", "h": 1.0, "v": 0.0, "event": "right", "label": ""}, {"src": "../output/cameras/images/EyeCam_Right_down.png", "h": 0.0, "v": -1.0, "event": "down", "label": ""}, {"src": "../output/cameras/images/EyeCam_Low_left.png", "h": -1.0, "v": 0.0, "event": "left", "label": ""}, {"src": "../output/cameras/images/EyeCam_Low_up.png", "h": 0.0, "v": 1.0, "event": "up", "label": ""}, {"src": "../output/cameras/images/EyeCam_High_rest.png", "h": 0.0, "v": 0.0, "event": "rest", "label": ""}, {"src": "../output/cameras/images/EyeCam_High_right.png", "h": 1.0, "v": 0.0, "event": "right", "label": ""}], "quality": {"frames": 25, "images_ok": 25, "in_bounds": 25, "visible": 25, "detector_checked": 25, "detector_agree": 23, "detector_median_px": 0.32, "flagged": 2}, "flagged": [{"frame": 7, "image": "images/EyeCam_Left_right.png", "issues": ["detector disagrees ([2.37, 3.27] px)"]}, {"frame": 11, "image": "images/EyeCam_Right_left.png", "issues": ["detector disagrees ([3.669, 3.233] px)"]}], "heatmaps": [], "video": null}, {"mode": "identities", "meta": {"mode": "identities", "engine": "cycles", "size": 448, "seed": 2026, "fps": null, "seconds": 124.2, "frames": 30, "created": "2026-11-20 00:35:17"}, "count": 30, "sample": [{"src": "../output/identities/images/aarav_rest.png", "h": 0.0, "v": 0.0, "event": "rest", "label": ""}, {"src": "../output/identities/images/aarav_right.png", "h": 1.0, "v": 0.0, "event": "right", "label": ""}, {"src": "../output/identities/images/aarav_down.png", "h": 0.0, "v": -1.0, "event": "down", "label": ""}, {"src": "../output/identities/images/mei_left.png", "h": -1.0, "v": 0.0, "event": "left", "label": ""}, {"src": "../output/identities/images/mei_up.png", "h": 0.0, "v": 1.0, "event": "up", "label": ""}, {"src": "../output/identities/images/lena_rest.png", "h": 0.0, "v": 0.0, "event": "rest", "label": ""}, {"src": "../output/identities/images/lena_right.png", "h": 1.0, "v": 0.0, "event": "right", "label": ""}, {"src": "../output/identities/images/lena_down.png", "h": 0.0, "v": -1.0, "event": "down", "label": ""}, {"src": "../output/identities/images/omar_left.png", "h": -1.0, "v": 0.0, "event": "left", "label": ""}, {"src": "../output/identities/images/omar_up.png", "h": 0.0, "v": 1.0, "event": "up", "label": ""}, {"src": "../output/identities/images/zuri_rest.png", "h": 0.0, "v": 0.0, "event": "rest", "label": ""}, {"src": "../output/identities/images/zuri_right.png", "h": 1.0, "v": 0.0, "event": "right", "label": ""}], "quality": {"frames": 30, "images_ok": 30, "in_bounds": 30, "visible": 30, "detector_checked": 30, "detector_agree": 30, "detector_median_px": 0.127, "flagged": 0}, "flagged": [], "heatmaps": [], "video": null}, {"mode": "pursuit", "meta": {"mode": "pursuit", "engine": "cycles", "size": 448, "seed": 2026, "fps": 15, "seconds": 185.7, "frames": 45, "created": "2026-11-20 00:33:12"}, "count": 45, "sample": [{"src": "../output/pursuit/images/00000.png", "h": 0.0, "v": 0.39525, "event": "pursuit", "label": ""}, {"src": "../output/pursuit/images/00003.png", "h": 0.121937, "v": 0.493423, "event": "pursuit", "label": ""}, {"src": "../output/pursuit/images/00006.png", "h": 0.35698, "v": 0.634385, "event": "pursuit", "label": ""}, {"src": "../output/pursuit/images/00009.png", "h": 0.564025, "v": 0.684699, "event": "pursuit", "label": ""}, {"src": "../output/pursuit/images/00012.png", "h": 0.725709, "v": 0.636317, "event": "pursuit", "label": ""}, {"src": "../output/pursuit/images/00015.png", "h": 0.828455, "v": 0.49604, "event": "pursuit", "label": ""}, {"src": "../output/pursuit/images/00018.png", "h": 0.863593, "v": 0.284489, "event": "pursuit", "label": ""}, {"src": "../output/pursuit/images/00021.png", "h": 0.828081, "v": 0.033011, "event": "pursuit", "label": ""}, {"src": "../output/pursuit/images/00024.png", "h": 0.72475, "v": -0.221021, "event": "pursuit", "label": ""}, {"src": "../output/pursuit/images/00027.png", "h": 0.56207, "v": -0.439818, "event": "pursuit", "label": ""}, {"src": "../output/pursuit/images/00030.png", "h": 0.353448, "v": -0.590838, "event": "pursuit", "label": ""}, {"src": "../output/pursuit/images/00033.png", "h": 0.116112, "v": -0.651668, "event": "pursuit", "label": ""}], "quality": {"frames": 45, "images_ok": 45, "in_bounds": 45, "visible": 42, "detector_checked": 42, "detector_agree": 42, "detector_median_px": 0.16, "flagged": 0}, "flagged": [], "heatmaps": ["../output/report/heatmap_pursuit_pupils.png", "../output/report/heatmap_pursuit_target.png"], "video": null}, {"mode": "random", "meta": {"mode": "random", "engine": "cycles", "size": 448, "seed": 2026, "fps": null, "seconds": 80.9, "frames": 24, "created": "2026-11-20 00:44:38"}, "count": 24, "sample": [{"src": "../output/random/images/00000.png", "h": -0.134475, "v": 0.800899, "event": "EyeCam.Low", "label": ""}, {"src": "../output/random/images/00002.png", "h": -0.832181, "v": 0.109539, "event": "EyeCam", "label": ""}, {"src": "../output/random/images/00004.png", "h": -0.677062, "v": 0.098943, "event": "EyeCam.Right", "label": ""}, {"src": "../output/random/images/00006.png", "h": 0.084892, "v": -0.907626, "event": "EyeCam.Right", "label": ""}, {"src": "../output/random/images/00008.png", "h": 0.057518, "v": 0.058442, "event": "EyeCam", "label": ""}, {"src": "../output/random/images/00010.png", "h": 0.141474, "v": -0.987689, "event": "EyeCam", "label": ""}, {"src": "../output/random/images/00012.png", "h": 0.586567, "v": 0.16572, "event": "EyeCam", "label": ""}, {"src": "../output/random/images/00014.png", "h": 0.43259, "v": 0.909545, "event": "EyeCam.Right", "label": ""}, {"src": "../output/random/images/00016.png", "h": -0.742409, "v": 0.645473, "event": "EyeCam.Low", "label": ""}, {"src": "../output/random/images/00018.png", "h": 0.990498, "v": 0.509283, "event": "EyeCam.Right", "label": ""}, {"src": "../output/random/images/00020.png", "h": -0.430901, "v": 0.552777, "event": "EyeCam.High", "label": ""}, {"src": "../output/random/images/00022.png", "h": -0.815437, "v": 0.158126, "event": "EyeCam", "label": ""}], "quality": {"frames": 24, "images_ok": 24, "in_bounds": 24, "visible": 16, "detector_checked": 13, "detector_agree": 12, "detector_median_px": 0.466, "flagged": 1}, "flagged": [{"frame": 1, "image": "images/00001.png", "issues": ["detector disagrees ([4.433, 4.448] px)"]}], "heatmaps": ["../output/report/heatmap_random_pupils.png", "../output/report/heatmap_random_target.png"], "video": null}, {"mode": "rays", "meta": {"mode": "rays", "engine": "cycles", "size": 768, "seed": 2026, "fps": null, "seconds": 50.9, "frames": 10, "created": "2026-11-20 00:26:12"}, "count": 10, "sample": [{"src": "../output/rays/images/rays_00.png", "h": 0.0, "v": 1.0, "event": "OverlayCam", "label": ""}, {"src": "../output/rays/images/rays_01.png", "h": 0.587785, "v": 0.809017, "event": "OverlayCam", "label": ""}, {"src": "../output/rays/images/rays_02.png", "h": 0.951057, "v": 0.309017, "event": "OverlayCam", "label": ""}, {"src": "../output/rays/images/rays_03.png", "h": 0.951057, "v": -0.309017, "event": "OverlayCam", "label": ""}, {"src": "../output/rays/images/rays_04.png", "h": 0.587785, "v": -0.809017, "event": "OverlayCam", "label": ""}, {"src": "../output/rays/images/rays_05.png", "h": 0.0, "v": -1.0, "event": "OverlayCam", "label": ""}, {"src": "../output/rays/images/rays_06.png", "h": -0.587785, "v": -0.809017, "event": "OverlayCam", "label": ""}, {"src": "../output/rays/images/rays_07.png", "h": -0.951057, "v": -0.309017, "event": "OverlayCam", "label": ""}, {"src": "../output/rays/images/rays_08.png", "h": -0.951057, "v": 0.309017, "event": "OverlayCam", "label": ""}, {"src": "../output/rays/images/rays_09.png", "h": -0.587785, "v": 0.809017, "event": "OverlayCam", "label": ""}], "quality": {"frames": 10, "images_ok": 10, "in_bounds": 10, "visible": 0, "detector_checked": 0, "detector_agree": 0, "detector_median_px": null, "flagged": 0}, "flagged": [], "heatmaps": [], "video": null}, {"mode": "saccade", "meta": {"mode": "saccade", "engine": "cycles", "size": 448, "seed": 2026, "fps": 15, "seconds": 228.4, "frames": 57, "created": "2026-11-20 00:30:05"}, "count": 57, "sample": [{"src": "../output/saccade/images/00000.png", "h": -0.766071, "v": 0.004963, "event": "fixation", "label": ""}, {"src": "../output/saccade/images/00004.png", "h": -0.76176, "v": 0.005032, "event": "saccade", "label": ""}, {"src": "../output/saccade/images/00008.png", "h": 0.028496, "v": 0.720386, "event": "blink", "label": ""}, {"src": "../output/saccade/images/00012.png", "h": -0.795777, "v": -0.545378, "event": "fixation", "label": ""}, {"src": "../output/saccade/images/00016.png", "h": -0.794726, "v": -0.553431, "event": "saccade", "label": ""}, {"src": "../output/saccade/images/00020.png", "h": 0.203075, "v": 0.109074, "event": "fixation", "label": ""}, {"src": "../output/saccade/images/00024.png", "h": 0.559144, "v": 0.095399, "event": "fixation", "label": ""}, {"src": "../output/saccade/images/00028.png", "h": 0.566747, "v": 0.095623, "event": "saccade", "label": ""}, {"src": "../output/saccade/images/00032.png", "h": 0.466823, "v": 0.538113, "event": "fixation", "label": ""}, {"src": "../output/saccade/images/00036.png", "h": 0.500161, "v": 0.176892, "event": "fixation", "label": ""}, {"src": "../output/saccade/images/00040.png", "h": 0.502052, "v": 0.173042, "event": "saccade", "label": ""}, {"src": "../output/saccade/images/00044.png", "h": -0.527764, "v": 0.228294, "event": "fixation", "label": ""}], "quality": {"frames": 57, "images_ok": 57, "in_bounds": 57, "visible": 50, "detector_checked": 50, "detector_agree": 50, "detector_median_px": 0.137, "flagged": 0}, "flagged": [], "heatmaps": ["../output/report/heatmap_saccade_pupils.png", "../output/report/heatmap_saccade_target.png"], "video": null}, {"mode": "vergence", "meta": {"mode": "vergence", "engine": "cycles", "size": 448, "seed": 2026, "fps": null, "seconds": 37.0, "frames": 9, "created": "2026-11-20 00:37:33"}, "count": 9, "sample": [{"src": "../output/vergence/images/00_0015cm.png", "h": 0.0, "v": 0.0, "event": "EyeCam", "label": ""}, {"src": "../output/vergence/images/01_0020cm.png", "h": 0.0, "v": 0.0, "event": "EyeCam", "label": ""}, {"src": "../output/vergence/images/02_0025cm.png", "h": 0.0, "v": 0.0, "event": "EyeCam", "label": ""}, {"src": "../output/vergence/images/03_0035cm.png", "h": 0.0, "v": 0.0, "event": "EyeCam", "label": ""}, {"src": "../output/vergence/images/04_0050cm.png", "h": 0.0, "v": 0.0, "event": "EyeCam", "label": ""}, {"src": "../output/vergence/images/05_0075cm.png", "h": 0.0, "v": 0.0, "event": "EyeCam", "label": ""}, {"src": "../output/vergence/images/06_0100cm.png", "h": 0.0, "v": 0.0, "event": "EyeCam", "label": ""}, {"src": "../output/vergence/images/07_0200cm.png", "h": 0.0, "v": 0.0, "event": "EyeCam", "label": ""}, {"src": "../output/vergence/images/08_0600cm.png", "h": 0.0, "v": 0.0, "event": "EyeCam", "label": ""}], "quality": {"frames": 9, "images_ok": 9, "in_bounds": 9, "visible": 9, "detector_checked": 9, "detector_agree": 9, "detector_median_px": 0.141, "flagged": 0}, "flagged": [], "heatmaps": [], "video": null}], "config": {"span": 0.05, "distance": 0.35, "camera": 0.4, "lens": 135.0, "size": 1024}, "travel": 18.992875};
+const $ = (s) => document.querySelector(s);
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const deg = (r) => r * 180 / Math.PI;
+const fmt = (x, n = 2) => (x === null || x === undefined || Number.isNaN(+x)) ? "–" : (+x).toFixed(n);
+const sgn = (x, n = 3) => (x >= 0 ? "+" : "") + (+x).toFixed(n);
+const frames = DATA.frames || [];
+const ref = frames[0];
+const rep = DATA.report;
+const S = DATA.config.size;
+
+// ---------------------------------------------------------------- hero: eyes follow the pointer
+(function hero() {
+  const pool = [];
+  frames.forEach((f) => pool.push({ src: f.src, h: f.input.h, v: f.input.v, label: `frame ${String(f.frame).padStart(2, "0")}` }));
+  const di = DATA.directionImages || {};
+  const dirs = { left: [-1, 0], right: [1, 0], up: [0, 1], down: [0, -1] };
+  for (const [k, hv] of Object.entries(dirs)) if (di[k]) pool.push({ src: di[k], h: hv[0], v: hv[1], label: k });
+  const rest = { src: di.reset || (ref && ref.src) || "", h: 0, v: 0, label: "rest" };
+  pool.forEach((p) => { const i = new Image(); i.src = p.src; });
+  const img = $("#heroImg"), tag = $("#heroTag"), box = $("#hero"), svg = $("#heroSvg");
+  img.src = rest.src;
+  let current = rest;
+  function show(p, x, y) {
+    if (p !== current) { img.style.opacity = .85; img.src = p.src; requestAnimationFrame(() => (img.style.opacity = 1)); current = p; }
+    tag.textContent = `${p.label}  ·  h ${sgn(p.h, 2)}  v ${sgn(p.v, 2)}`;
+    svg.innerHTML = x === undefined ? "" :
+      `<circle cx="${x}" cy="${y}" r="14" fill="none" stroke="#22d3ee" stroke-width="1.5" opacity=".9"/>
+       <circle cx="${x}" cy="${y}" r="2.5" fill="#22d3ee"/>`;
+  }
+  box.addEventListener("pointermove", (e) => {
+    const r = box.getBoundingClientRect();
+    const dx = (e.clientX - r.left) / r.width * 2 - 1, dy = -((e.clientY - r.top) / r.height * 2 - 1);
+    const x = e.clientX - r.left, y = e.clientY - r.top;
+    if (Math.hypot(dx, dy) < 0.22 || !pool.length) return show(rest, x, y);
+    let best = pool[0], bestD = 1e9;
+    for (const p of pool) { const d = Math.hypot(p.h - dx, p.v - dy) + (Math.hypot(p.h, p.v) > 0 ? 0 : 1); if (d < bestD) { bestD = d; best = p; } }
+    show(best, x, y);
+  });
+  box.addEventListener("pointerleave", () => show(rest));
+  show(rest);
+})();
+
+// ---------------------------------------------------------------- KPIs
+(function kpis() {
+  const out = [];
+  const add = (label, value, note = "", cls = "") => out.push(`<div class="kpi"><small>${esc(label)}</small><b class="${cls}">${value}</b><em>${esc(note)}</em></div>`);
+  const d = DATA.directions;
+  add("Direction check", d ? `${d.passed}/${d.of}` : "–", "left · right · up · down · reset", d && d.passed === d.of ? "ok" : "bad");
+  add("Clockwise order", rep ? (rep.clockwise ? "pass" : "fail") : "–", "10 frames", rep && rep.clockwise ? "ok" : "bad");
+  add("Pupil detector", rep && rep.detected_vs_truth_px ? `${fmt(rep.detected_vs_truth_px.mean)} px` : "–", "image vs label, mean");
+  add("3D gaze from image", rep && rep.gaze_reconstruction_deg ? `${fmt(rep.gaze_reconstruction_deg.mean)}°` : "–", "reconstruction error");
+  add("Rig aim error", rep ? `${fmt(rep.max_aim_error_deg * 3600, 2)}″` : "–", "arc-seconds, worst eye");
+  add("Pupil travel", DATA.travel ? `${fmt(DATA.travel, 1)} px` : "–", "per full deflection");
+  $("#kpis").innerHTML = out.join("");
+  const b = DATA.build;
+  if (b) $("#buildpill").textContent = `Blender ${b.blender || ""}`;
+  $("#foot").textContent = b ? `eye radius ${fmt(b.eye_radius_m * 1000, 2)} mm · IPD 63.0 mm · lens ${DATA.config.lens} mm` : "";
+})();
+
+// ---------------------------------------------------------------- gaze console
+const opts = ref ? {
+  centres: { L: ref.eye_center_L, R: ref.eye_center_R },
+  radius: Math.hypot(...ref.pupil_center_3D_L.map((x, i) => x - ref.eye_center_L[i])),
+  K: ref.camera_matrix.K, w2c: ref.camera_matrix.world_to_camera, span: DATA.config.span,
+} : null;
+const stage = $("#stage"), ctx = stage.getContext("2d");
+const base = new Image();
+base.src = (DATA.directionImages && DATA.directionImages.reset) || (ref && ref.src) || "";
+let state = { h: 0, v: 0, d: 35, lum: 100 };
+
+function drawStage(sol, mm) {
+  ctx.fillStyle = "#000"; ctx.fillRect(0, 0, 1024, 1024);
+  if (base.complete && base.naturalWidth) { ctx.globalAlpha = .9; ctx.drawImage(base, 0, 0, 1024, 1024); ctx.globalAlpha = 1; }
+  if (!sol) return;
+  const rest = Gaze.solve(0, 0, { ...opts, distance: DATA.config.distance });
+  const k = opts.radius / 0.012;
+  const pxPerM = opts.K[0][0] / DATA.config.camera;
+  for (const side of ["L", "R"]) {
+    const col = side === "L" ? "#3d8bff" : "#ffb547";
+    const [u0, v0] = rest.eyes[side].uv, [u, v] = sol.eyes[side].uv;
+    ctx.setLineDash([4, 6]); ctx.strokeStyle = "rgba(255,255,255,.45)"; ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.arc(u0, v0, 5, 0, 7); ctx.stroke(); ctx.setLineDash([]);
+    ctx.shadowColor = col; ctx.shadowBlur = 18; ctx.strokeStyle = col; ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.moveTo(u0, v0); ctx.lineTo(u, v); ctx.stroke();
+    ctx.beginPath(); ctx.arc(u, v, mm / 2000 * k * pxPerM, 0, 7); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(u - 20, v); ctx.lineTo(u + 20, v); ctx.moveTo(u, v - 20); ctx.lineTo(u, v + 20); ctx.stroke();
+    ctx.shadowBlur = 0;
+  }
+}
+
+// 3D gaze rays with a tiny orbit camera
+const rays = $("#rays"), rctx = rays.getContext("2d");
+let orbit = { yaw: -0.65, pitch: 0.32 };
+(function drag() {
+  let p = null;
+  rays.addEventListener("pointerdown", (e) => { p = [e.clientX, e.clientY, orbit.yaw, orbit.pitch]; rays.setPointerCapture(e.pointerId); });
+  rays.addEventListener("pointermove", (e) => { if (!p) return; orbit.yaw = p[2] + (e.clientX - p[0]) * 0.008; orbit.pitch = Math.max(-1.3, Math.min(1.3, p[3] + (e.clientY - p[1]) * 0.008)); update(); });
+  rays.addEventListener("pointerup", () => (p = null));
+})();
+function proj(pt) {
+  const [x, y, z] = [pt[0], pt[1] + 0.19, pt[2]];
+  const cy = Math.cos(orbit.yaw), sy = Math.sin(orbit.yaw), cp = Math.cos(orbit.pitch), sp = Math.sin(orbit.pitch);
+  const x1 = cy * x - sy * y, y1 = sy * x + cy * y;
+  const y2 = cp * y1 - sp * z, z2 = sp * y1 + cp * z;
+  const depth = 0.62 + y2, s = 1250 / depth;
+  return [480 + x1 * s, 310 - z2 * s, depth];
+}
+function line(a, b, col, w = 1, dash = null) { const p = proj(a), q = proj(b); rctx.strokeStyle = col; rctx.lineWidth = w; rctx.setLineDash(dash || []); rctx.beginPath(); rctx.moveTo(p[0], p[1]); rctx.lineTo(q[0], q[1]); rctx.stroke(); rctx.setLineDash([]); }
+function sphere(c, r, col) { const p = proj(c); const s = proj([c[0] + r, c[1], c[2]]); const rad = Math.max(2, Math.hypot(s[0] - p[0], s[1] - p[1])); const g = rctx.createRadialGradient(p[0] - rad / 3, p[1] - rad / 3, 1, p[0], p[1], rad); g.addColorStop(0, "#fff"); g.addColorStop(1, col); rctx.fillStyle = g; rctx.beginPath(); rctx.arc(p[0], p[1], rad, 0, 7); rctx.fill(); }
+function drawRays(sol) {
+  rctx.fillStyle = "#05070b"; rctx.fillRect(0, 0, 960, 600);
+  const span = DATA.config.span, D = sol.target[1];
+  for (let i = -5; i <= 5; i++) {
+    line([i * span / 5, D, -span], [i * span / 5, D, span], "rgba(255,255,255,.08)");
+    line([-span, D, i * span / 5], [span, D, i * span / 5], "rgba(255,255,255,.08)");
+  }
+  const cz = -DATA.config.camera, f = 0.03;
+  for (const [a, b] of [[[-f, cz, -f], [f, cz, -f]], [[f, cz, -f], [f, cz, f]], [[f, cz, f], [-f, cz, f]], [[-f, cz, f], [-f, cz, -f]]]) line(a, b, "rgba(34,211,238,.6)", 1.2);
+  for (const c of [[-f, cz, -f], [f, cz, -f], [f, cz, f], [-f, cz, f]]) line(c, [0, cz + 0.05, 0], "rgba(34,211,238,.35)");
+  line([0, 0, 0], [0, cz, 0], "rgba(255,255,255,.12)", 1, [3, 5]);
+  for (const s of ["L", "R"]) {
+    const e = sol.eyes[s], col = s === "L" ? "#3d8bff" : "#ffb547";
+    rctx.shadowColor = col; rctx.shadowBlur = 12; line(e.centre, sol.target, col, 2); rctx.shadowBlur = 0;
+    sphere(e.centre, opts.radius, col);
+  }
+  rctx.shadowColor = "#ff5d6c"; rctx.shadowBlur = 16; sphere(sol.target, 0.004, "#ff5d6c"); rctx.shadowBlur = 0;
+  rctx.fillStyle = "#566072"; rctx.font = "12px JetBrains Mono, monospace";
+  rctx.fillText(`fixation ${Math.round(-D * 100)} cm  ·  vergence ${fmt(sol.vergence, 2)}°`, 16, 580);
+}
+
+function update() {
+  if (!opts) return;
+  state.h = +$("#h").value; state.v = +$("#v").value; state.d = +$("#d").value; state.lum = Math.pow(10, +$("#lum").value);
+  $("#ho").textContent = sgn(state.h, 2); $("#vo").textContent = sgn(state.v, 2);
+  $("#do").textContent = `${state.d} cm`; $("#lo").textContent = `${state.lum < 10 ? state.lum.toFixed(1) : Math.round(state.lum)} cd/m²`;
+  const sol = Gaze.solve(state.h, state.v, { ...opts, distance: state.d / 100 });
+  const mm = Gaze.pupilDiameter(state.lum);
+  drawStage(sol, mm); drawRays(sol);
+  $("#readout").innerHTML = ["L", "R"].map((s) => {
+    const e = sol.eyes[s];
+    return `<div class="eye ${s.toLowerCase()}"><h4>${s === "L" ? "left eye" : "right eye"}</h4><div class="kv">
+      <span>yaw · pitch</span><span>${fmt(e.yaw)}° · ${fmt(e.pitch)}°</span>
+      <span>rotation xyz</span><span>${e.euler.map((a) => fmt(deg(a), 2)).join(" ")}</span>
+      <span>pupil px</span><span>${fmt(e.uv[0], 1)}, ${fmt(e.uv[1], 1)}</span></div></div>`;
+  }).join("") + `<div class="eye" style="grid-column: span 2"><div class="kv">
+      <span>pupil diameter (Moon–Spencer)</span><span>${fmt(mm, 2)} mm</span>
+      <span>fixation point (m)</span><span>${sol.target.map((x) => fmt(x, 3)).join(", ")}</span></div></div>`;
+}
+["h", "v", "d", "lum"].forEach((id) => $("#" + id).addEventListener("input", update));
+base.onload = update;
+let tick = null;
+function stop() { clearInterval(tick); tick = null; document.querySelectorAll(".chip").forEach((c) => c.classList.remove("on")); }
+function set(h, v) { $("#h").value = h.toFixed(3); $("#v").value = v.toFixed(3); update(); }
+$("#play").onclick = () => { const on = !$("#play").classList.contains("on"); stop(); if (!on) return; $("#play").classList.add("on");
+  let k = 0; tick = setInterval(() => { const t = 2 * Math.PI * (k++ % 10) / 10; set(Math.sin(t), Math.cos(t)); }, 650); };
+$("#saccade").onclick = () => { const on = !$("#saccade").classList.contains("on"); stop(); if (!on) return; $("#saccade").classList.add("on");
+  let from = [0, 0], to = [0, 0], t0 = 0, dur = 1;
+  tick = setInterval(() => { const t = performance.now() / 1000;
+    if (t - t0 > dur + 0.35) { from = to; to = [Math.random() * 2 - 1, Math.random() * 2 - 1]; t0 = t; dur = (2.2 * 10 + 21) / 1000 * 4; }
+    const s = Math.min(1, (t - t0) / dur), m = s * s * s * (10 - 15 * s + 6 * s * s);
+    set(from[0] + (to[0] - from[0]) * m, from[1] + (to[1] - from[1]) * m); }, 16); };
+$("#reset").onclick = () => { stop(); $("#d").value = 35; $("#lum").value = 2; set(0, 0); };
+update();
+
+// ---------------------------------------------------------------- sequence
+function lightbox(src, cap) { $("#lbImg").src = src; $("#lbCap").textContent = cap; $("#lb").classList.add("on"); }
+$("#lb").onclick = () => $("#lb").classList.remove("on");
+addEventListener("keydown", (e) => { if (e.key === "Escape") $("#lb").classList.remove("on"); });
+$("#frames").innerHTML = frames.map((f, i) => {
+  const dot = (uv, c) => `<circle cx="${uv[0] / S * 100}%" cy="${uv[1] / S * 100}%" r="4" fill="${c}" stroke="#000" stroke-width="1.2"/>`;
+  return `<div class="tile" data-i="${i}"><img src="${esc(f.src)}" alt="frame ${i}" loading="lazy">
+    <svg>${dot(f.pupil_center_2D_L, "#3d8bff")}${dot(f.pupil_center_2D_R, "#ffb547")}</svg>
+    <div class="cap"><span>${String(f.frame).padStart(2, "0")}</span><span>h ${sgn(f.input.h)} · v ${sgn(f.input.v)}</span></div></div>`;
+}).join("") || `<div class="empty">No renders yet. Run ./run.sh official</div>`;
+document.querySelectorAll(".tile").forEach((t) => t.onclick = () => { const f = frames[+t.dataset.i];
+  lightbox(f.src, `frame ${String(f.frame).padStart(2, "0")} · h ${sgn(f.input.h)} · v ${sgn(f.input.v)} · L ${f.pupil_center_2D_L.map((x) => fmt(x, 2))} · R ${f.pupil_center_2D_R.map((x) => fmt(x, 2))}`); });
+(function ring() {
+  let s = `<circle r="92" fill="none" stroke="rgba(255,255,255,.1)"/>`;
+  frames.forEach((f, i) => { const x = f.input.h * 80, y = -f.input.v * 80;
+    s += `<circle cx="${x}" cy="${y}" r="9" fill="rgba(61,139,255,.18)" stroke="#3d8bff"/><text x="${x}" y="${y + 3.5}" text-anchor="middle" font-size="9" fill="#eef1f6" font-family="JetBrains Mono">${i}</text>`; });
+  s += `<path d="M 30 -86 A 92 92 0 0 1 80 -46" fill="none" stroke="#22d3ee" stroke-width="2" marker-end="url(#a)"/>
+    <defs><marker id="a" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#22d3ee"/></marker></defs>`;
+  $("#ring").innerHTML = s;
+})();
+
+// ---------------------------------------------------------------- calibration
+if (ref) {
+  const c = ref.camera_matrix;
+  $("#cam").textContent = `lens ${c.lens_mm} mm · sensor ${c.sensor_mm} mm · FOV ${c.fov_deg}°
+image ${c.image_size.join(" × ")} px
+
+K =
+${c.K.map((r) => "  " + r.map((x) => fmt(x, 3).padStart(10)).join(" ")).join("\n")}
+
+world → camera (OpenCV) =
+${c.world_to_camera.map((r) => "  " + r.map((x) => fmt(x, 4).padStart(9)).join(" ")).join("\n")}
+
+${c.convention}`;
+}
+if (rep) {
+  const row = (k, v, cls = "") => `<tr><td>${esc(k)}</td><td class="${cls}">${v}</td></tr>`;
+  const st = (o, u) => o ? `${fmt(o.mean, 3)} ${u} mean · ${fmt(o.max, 3)} max` : "–";
+  $("#errors").innerHTML = `<table>
+    ${row("Analytic model vs Blender scene", st(rep.model_vs_scene_px, "px"))}
+    ${row("Image detector vs label", st(rep.detected_vs_truth_px, "px"))}
+    ${row("3D gaze rebuilt from pixels", st(rep.gaze_reconstruction_deg, "°"))}
+    ${row("Worst eye aim error", fmt(rep.max_aim_error_deg, 6) + "°")}
+    ${row("Metadata schema", rep.schema_problems.length ? esc(rep.schema_problems.join("; ")) : "valid", rep.schema_problems.length ? "bad" : "ok")}
+    ${row("Clockwise pupil angle", rep.pupil_angles_deg.map((a) => Math.round(a)).join(" → ") + "°")}
+  </table>`;
+  const byFrame = Object.fromEntries(rep.frames.map((r) => [r.frame, r]));
+  $("#table").innerHTML = `<thead><tr><th>frame</th><th>h</th><th>v</th><th>rotation L (°)</th><th>rotation R (°)</th>
+    <th>pupil L (px)</th><th>pupil R (px)</th><th>detector L / R</th><th>3D gaze L / R</th><th>vergence</th></tr></thead><tbody>` +
+    frames.map((f) => { const r = byFrame[f.frame] || {};
+      return `<tr><td>${String(f.frame).padStart(2, "0")}</td><td>${sgn(f.input.h)}</td><td>${sgn(f.input.v)}</td>
+      <td>${f.eye_rotation_L.map((a) => fmt(deg(a), 2)).join(" ")}</td><td>${f.eye_rotation_R.map((a) => fmt(deg(a), 2)).join(" ")}</td>
+      <td>${f.pupil_center_2D_L.map((x) => fmt(x, 2)).join(", ")}</td><td>${f.pupil_center_2D_R.map((x) => fmt(x, 2)).join(", ")}</td>
+      <td>${fmt(r.detected_vs_truth_px_L)} / ${fmt(r.detected_vs_truth_px_R)} px</td>
+      <td>${fmt(r.gaze_reconstruction_deg_L)} / ${fmt(r.gaze_reconstruction_deg_R)}°</td><td>${fmt(f.vergence_deg, 3)}°</td></tr>`; }).join("") + "</tbody>";
+} else { $("#errors").innerHTML = `<div class="empty">Run ./run.sh report</div>`; }
+
+// ---------------------------------------------------------------- directions
+(function dirs() {
+  const d = DATA.directions, imgs = DATA.directionImages || {};
+  $("#dirs").innerHTML = ["left", "right", "up", "down", "reset"].filter((n) => imgs[n]).map((n) => {
+    const r = d && d.directions[n], pass = r && r.pass;
+    const detail = r && r.shift_px ? `L ${r.shift_px.L.map((x) => fmt(x, 1)).join(", ")} · R ${r.shift_px.R.map((x) => fmt(x, 1)).join(", ")} px`
+      : r && r.return_error_px !== undefined ? `returns within ${fmt(r.return_error_px, 4)} px` : "";
+    return `<div class="card dir"><img src="${esc(imgs[n])}" alt="${n}" loading="lazy"><div class="meta"><div class="row"><b style="text-transform:capitalize;font-family:var(--display)">${n}</b>
+      <span class="badge ${pass ? "ok" : "bad"}">${pass ? "PASS" : "FAIL"}</span></div>
+      <div class="mono" style="color:var(--muted);font-size:11px;margin-top:6px">${detail}</div></div></div>`;
+  }).join("") || `<div class="empty">Run ./run.sh official</div>`;
+})();
+
+// ---------------------------------------------------------------- lab
+(function lab() {
+  const sets = DATA.lab || [];
+  if (!sets.length) { $("#labbody").innerHTML = `<div class="empty">No lab datasets yet. Try ./run.sh dataset --mode saccade</div>`; return; }
+  const titles = { saccade: "Saccades", pursuit: "Smooth pursuit", identities: "Identities", cameras: "Multi-camera", vergence: "Vergence sweep", rays: "3D gaze rays", random: "Domain randomised" };
+  $("#labtabs").innerHTML = sets.map((s, i) => `<span class="chip${i ? "" : " on"}" data-i="${i}">${esc(titles[s.mode] || s.mode)} · ${s.count}</span>`).join("");
+  function show(i) {
+    document.querySelectorAll("#labtabs .chip").forEach((c) => c.classList.toggle("on", +c.dataset.i === i));
+    const s = sets[i], q = s.quality || {};
+    const hero = s.video ? `<video src="${esc(s.video)}" controls autoplay muted loop playsinline></video>`
+      : s.sample[0] ? `<img class="main-img" src="${esc(s.sample[0].src)}" alt="">` : "";
+    $("#labbody").innerHTML = `<div class="card pad lab-body"><div>${hero}
+      <div class="strip">${s.sample.slice(0, 12).map((f) => `<img src="${esc(f.src)}" title="${esc(f.event)}" data-cap="${esc(`${f.event} · h ${sgn(f.h, 2)} v ${sgn(f.v, 2)}`)}">`).join("")}</div></div>
+      <div><h3 style="margin:0 0 10px;font:600 18px var(--display)">${esc(titles[s.mode] || s.mode)}</h3>
+        <div class="stat"><span>frames</span><b>${s.count}</b></div>
+        <div class="stat"><span>engine · size</span><b>${esc(s.meta.engine)} · ${s.meta.size}px</b></div>
+        ${s.meta.fps ? `<div class="stat"><span>frame rate</span><b>${s.meta.fps} fps</b></div>` : ""}
+        <div class="stat"><span>flagged by QC</span><b class="${q.flagged ? "warn" : "ok"}">${q.flagged ?? "–"}</b></div>
+        <div class="stat"><span>detector median error</span><b>${fmt(q.detector_median_px)} px</b></div>
+        <div class="stat"><span>clear pupils</span><b>${q.visible ?? "–"} / ${q.frames ?? "–"}</b></div>
+        ${s.heatmaps.length ? `<div class="heat">${s.heatmaps.map((h) => `<img src="${esc(h)}" alt="heatmap">`).join("")}</div>` : ""}
+      </div></div>`;
+    document.querySelectorAll(".strip img").forEach((im) => im.onclick = () => lightbox(im.src, im.dataset.cap));
+  }
+  document.querySelectorAll("#labtabs .chip").forEach((c) => c.onclick = () => show(+c.dataset.i));
+  show(0);
+})();
+
+// ---------------------------------------------------------------- guardrails
+$("#guards").innerHTML = [
+  ["Validated inputs", "Gaze, distance, pupil and lid inputs are type- and range-checked. Bad input raises instead of rendering a wrong label."],
+  ["Self-checking labels", "Every pupil is re-projected through Blender's own camera (0.01 px tolerance) and every eye's aim is re-measured from the posed scene."],
+  ["Safe file writes", "Renders are PNG only, never written into source folders or through symlinks; datasets stay inside output/."],
+  ["Locked-down job queue", "Only allowlisted project scripts run, every argument is pattern-checked, no shell, no paths outside the project."],
+  ["Verifiable bundle", "The submission zip carries SHA-256 checksums for every file and is re-verified after packing."],
+  ["Privacy by design", "No real person is ever captured: a CC0 parametric face and fully synthetic eyes."],
+].map(([t, d]) => `<div class="card guard"><h4><i>✓</i>${t}</h4><p>${d}</p></div>`).join("");
+
+// ---------------------------------------------------------------- polish
+const io = new IntersectionObserver((es) => es.forEach((e) => e.isIntersecting && e.target.classList.add("in")), { threshold: .08 });
+document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+const links = [...document.querySelectorAll("header nav a")];
+addEventListener("scroll", () => { let cur = null;
+  for (const a of links) { const el = $(a.getAttribute("href")); if (el && el.getBoundingClientRect().top < 140) cur = a; }
+  links.forEach((a) => a.classList.toggle("on", a === cur)); });
+</script>
+</body>
+</html>
