@@ -1,0 +1,13 @@
+{
+ "stats": {
+  "frames": 10,
+  "images_ok": 10,
+  "in_bounds": 10,
+  "visible": 0,
+  "detector_checked": 0,
+  "detector_agree": 0,
+  "detector_median_px": null,
+  "flagged": 0
+ },
+ "flagged": []
+}

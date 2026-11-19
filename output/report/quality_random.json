@@ -1,0 +1,21 @@
+{
+ "stats": {
+  "frames": 24,
+  "images_ok": 24,
+  "in_bounds": 24,
+  "visible": 16,
+  "detector_checked": 13,
+  "detector_agree": 12,
+  "detector_median_px": 0.466,
+  "flagged": 1
+ },
+ "flagged": [
+  {
+   "frame": 1,
+   "image": "images/00001.png",
+   "issues": [
+    "detector disagrees ([4.433, 4.448] px)"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,28 @@
+{
+ "stats": {
+  "frames": 25,
+  "images_ok": 25,
+  "in_bounds": 25,
+  "visible": 25,
+  "detector_checked": 25,
+  "detector_agree": 23,
+  "detector_median_px": 0.32,
+  "flagged": 2
+ },
+ "flagged": [
+  {
+   "frame": 7,
+   "image": "images/EyeCam_Left_right.png",
+   "issues": [
+    "detector disagrees ([2.37, 3.27] px)"
+   ]
+  },
+  {
+   "frame": 11,
+   "image": "images/EyeCam_Right_left.png",
+   "issues": [
+    "detector disagrees ([3.669, 3.233] px)"
+   ]
+  }
+ ]
+}

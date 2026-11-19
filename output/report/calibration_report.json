@@ -1,0 +1,562 @@
+{
+ "schema_problems": [],
+ "clockwise": true,
+ "pupil_angles_deg": [
+  0.0,
+  35.97,
+  71.98,
+  108.02,
+  144.03,
+  180.0,
+  215.97,
+  251.98,
+  288.02,
+  324.03
+ ],
+ "model_vs_scene_px": {
+  "mean": 0.0008,
+  "max": 0.0017
+ },
+ "detected_vs_truth_px": {
+  "mean": 0.3055,
+  "max": 0.795
+ },
+ "gaze_reconstruction_deg": {
+  "mean": 0.1304,
+  "max": 0.3398
+ },
+ "max_aim_error_deg": 5e-05,
+ "directions": {
+  "min_shift_px": 3.0,
+  "directions": {
+   "left": {
+    "input": [
+     -1.0,
+     0.0
+    ],
+    "shift_px": {
+     "L": [
+      -18.725,
+      0.0
+     ],
+     "R": [
+      -19.246,
+      0.0
+     ]
+    },
+    "pass": true
+   },
+   "right": {
+    "input": [
+     1.0,
+     0.0
+    ],
+    "shift_px": {
+     "L": [
+      19.247,
+      0.0
+     ],
+     "R": [
+      18.724,
+      0.0
+     ]
+    },
+    "pass": true
+   },
+   "up": {
+    "input": [
+     0.0,
+     1.0
+    ],
+    "shift_px": {
+     "L": [
+      0.016,
+      -19.001
+     ],
+     "R": [
+      -0.016,
+      -18.999
+     ]
+    },
+    "pass": true
+   },
+   "down": {
+    "input": [
+     0.0,
+     -1.0
+    ],
+    "shift_px": {
+     "L": [
+      0.015,
+      19.001
+     ],
+     "R": [
+      -0.016,
+      19.0
+     ]
+    },
+    "pass": true
+   },
+   "reset": {
+    "input": [
+     0.0,
+     0.0
+    ],
+    "return_error_px": 0.0,
+    "pass": true
+   }
+  },
+  "passed": 5,
+  "of": 5
+ },
+ "camera": {
+  "K": [
+   [
+    3840.0,
+    0.0,
+    512.0
+   ],
+   [
+    0.0,
+    3840.0,
+    512.0
+   ],
+   [
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "world_to_camera": [
+   [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    -7.5e-08,
+    -1.0,
+    -3e-08
+   ],
+   [
+    0.0,
+    1.0,
+    -7.5e-08,
+    0.400000006
+   ],
+   [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "image_size": [
+   1024,
+   1024
+  ],
+  "lens_mm": 135.0,
+  "sensor_mm": 36.0,
+  "fov_deg": 15.1893,
+  "convention": "OpenCV (x right, y down, z forward); pixel origin at top-left corner"
+ },
+ "frames": [
+  {
+   "frame": 0,
+   "h": 0.0,
+   "v": 1.0,
+   "aim_error_deg": 3.9e-05,
+   "vergence_deg": 10.1828,
+   "model_vs_scene_px_L": 0.0003,
+   "detected_vs_truth_px_L": 0.795,
+   "gaze_reconstruction_deg_L": 0.3398,
+   "pupil_L": [
+    812.91,
+    492.98
+   ],
+   "detected_L": [
+    812.502,
+    493.663
+   ],
+   "model_vs_scene_px_R": 0.0017,
+   "detected_vs_truth_px_R": 0.174,
+   "gaze_reconstruction_deg_R": 0.0746,
+   "pupil_R": [
+    211.1,
+    493.02
+   ],
+   "detected_R": [
+    211.124,
+    492.848
+   ]
+  },
+  {
+   "frame": 1,
+   "h": 0.587785,
+   "v": 0.809017,
+   "aim_error_deg": 2.5e-05,
+   "vergence_deg": 10.1481,
+   "model_vs_scene_px_L": 0.0007,
+   "detected_vs_truth_px_L": 0.503,
+   "gaze_reconstruction_deg_L": 0.2147,
+   "pupil_L": [
+    824.15,
+    496.49
+   ],
+   "detected_L": [
+    824.179,
+    496.992
+   ],
+   "model_vs_scene_px_R": 0.0008,
+   "detected_vs_truth_px_R": 0.507,
+   "gaze_reconstruction_deg_R": 0.2156,
+   "pupil_R": [
+    222.17,
+    496.76
+   ],
+   "detected_R": [
+    222.673,
+    496.843
+   ]
+  },
+  {
+   "frame": 2,
+   "h": 0.951057,
+   "v": 0.309017,
+   "aim_error_deg": 1.5e-05,
+   "vergence_deg": 10.0919,
+   "model_vs_scene_px_L": 0.0004,
+   "detected_vs_truth_px_L": 0.444,
+   "gaze_reconstruction_deg_L": 0.1887,
+   "pupil_L": [
+    831.19,
+    506.04
+   ],
+   "detected_L": [
+    831.455,
+    506.389
+   ],
+   "model_vs_scene_px_R": 0.001,
+   "detected_vs_truth_px_R": 0.255,
+   "gaze_reconstruction_deg_R": 0.1091,
+   "pupil_R": [
+    228.93,
+    506.22
+   ],
+   "detected_R": [
+    229.167,
+    506.321
+   ]
+  },
+  {
+   "frame": 3,
+   "h": 0.951057,
+   "v": -0.309017,
+   "aim_error_deg": 2.9e-05,
+   "vergence_deg": 10.0919,
+   "model_vs_scene_px_L": 0.0004,
+   "detected_vs_truth_px_L": 0.193,
+   "gaze_reconstruction_deg_L": 0.0816,
+   "pupil_L": [
+    831.19,
+    517.93
+   ],
+   "detected_L": [
+    831.141,
+    518.113
+   ],
+   "model_vs_scene_px_R": 0.0004,
+   "detected_vs_truth_px_R": 0.237,
+   "gaze_reconstruction_deg_R": 0.1016,
+   "pupil_R": [
+    228.93,
+    517.82
+   ],
+   "detected_R": [
+    229.069,
+    518.014
+   ]
+  },
+  {
+   "frame": 4,
+   "h": 0.587785,
+   "v": -0.809017,
+   "aim_error_deg": 5e-05,
+   "vergence_deg": 10.1481,
+   "model_vs_scene_px_L": 0.0003,
+   "detected_vs_truth_px_L": 0.173,
+   "gaze_reconstruction_deg_L": 0.0735,
+   "pupil_L": [
+    824.15,
+    527.47
+   ],
+   "detected_L": [
+    824.061,
+    527.619
+   ],
+   "model_vs_scene_px_R": 0.001,
+   "detected_vs_truth_px_R": 0.071,
+   "gaze_reconstruction_deg_R": 0.0304,
+   "pupil_R": [
+    222.17,
+    527.28
+   ],
+   "detected_R": [
+    222.137,
+    527.336
+   ]
+  },
+  {
+   "frame": 5,
+   "h": 0.0,
+   "v": -1.0,
+   "aim_error_deg": 3.1e-05,
+   "vergence_deg": 10.1827,
+   "model_vs_scene_px_L": 0.0007,
+   "detected_vs_truth_px_L": 0.39,
+   "gaze_reconstruction_deg_L": 0.1676,
+   "pupil_L": [
+    812.91,
+    530.98
+   ],
+   "detected_L": [
+    812.832,
+    530.599
+   ],
+   "model_vs_scene_px_R": 0.0006,
+   "detected_vs_truth_px_R": 0.762,
+   "gaze_reconstruction_deg_R": 0.3266,
+   "pupil_R": [
+    211.1,
+    531.02
+   ],
+   "detected_R": [
+    211.127,
+    530.257
+   ]
+  },
+  {
+   "frame": 6,
+   "h": -0.587785,
+   "v": -0.809017,
+   "aim_error_deg": 2.3e-05,
+   "vergence_deg": 10.1483,
+   "model_vs_scene_px_L": 0.0012,
+   "detected_vs_truth_px_L": 0.104,
+   "gaze_reconstruction_deg_L": 0.0453,
+   "pupil_L": [
+    801.83,
+    527.24
+   ],
+   "detected_L": [
+    801.901,
+    527.157
+   ],
+   "model_vs_scene_px_R": 0.0009,
+   "detected_vs_truth_px_R": 0.113,
+   "gaze_reconstruction_deg_R": 0.0487,
+   "pupil_R": [
+    199.86,
+    527.51
+   ],
+   "detected_R": [
+    199.808,
+    527.61
+   ]
+  },
+  {
+   "frame": 7,
+   "h": -0.951057,
+   "v": -0.309017,
+   "aim_error_deg": 3e-05,
+   "vergence_deg": 10.0923,
+   "model_vs_scene_px_L": 0.0004,
+   "detected_vs_truth_px_L": 0.093,
+   "gaze_reconstruction_deg_L": 0.0395,
+   "pupil_L": [
+    795.07,
+    517.78
+   ],
+   "detected_L": [
+    795.01,
+    517.849
+   ],
+   "model_vs_scene_px_R": 0.0009,
+   "detected_vs_truth_px_R": 0.166,
+   "gaze_reconstruction_deg_R": 0.071,
+   "pupil_R": [
+    192.82,
+    517.96
+   ],
+   "detected_R": [
+    192.837,
+    518.13
+   ]
+  },
+  {
+   "frame": 8,
+   "h": -0.951057,
+   "v": 0.309017,
+   "aim_error_deg": 2.5e-05,
+   "vergence_deg": 10.0923,
+   "model_vs_scene_px_L": 0.0003,
+   "detected_vs_truth_px_L": 0.136,
+   "gaze_reconstruction_deg_L": 0.0577,
+   "pupil_L": [
+    795.07,
+    506.18
+   ],
+   "detected_L": [
+    795.044,
+    506.313
+   ],
+   "model_vs_scene_px_R": 0.0004,
+   "detected_vs_truth_px_R": 0.271,
+   "gaze_reconstruction_deg_R": 0.1152,
+   "pupil_R": [
+    192.82,
+    506.07
+   ],
+   "detected_R": [
+    192.653,
+    506.286
+   ]
+  },
+  {
+   "frame": 9,
+   "h": -0.587785,
+   "v": 0.809017,
+   "aim_error_deg": 3.1e-05,
+   "vergence_deg": 10.1484,
+   "model_vs_scene_px_L": 0.0012,
+   "detected_vs_truth_px_L": 0.24,
+   "gaze_reconstruction_deg_L": 0.1014,
+   "pupil_L": [
+    801.83,
+    496.72
+   ],
+   "detected_L": [
+    801.598,
+    496.761
+   ],
+   "model_vs_scene_px_R": 0.0017,
+   "detected_vs_truth_px_R": 0.483,
+   "gaze_reconstruction_deg_R": 0.205,
+   "pupil_R": [
+    199.86,
+    496.53
+   ],
+   "detected_R": [
+    199.519,
+    496.874
+   ]
+  }
+ ],
+ "datasets": {
+  "cameras": {
+   "frames": 25,
+   "quality": {
+    "frames": 25,
+    "images_ok": 25,
+    "in_bounds": 25,
+    "visible": 25,
+    "detector_checked": 25,
+    "detector_agree": 23,
+    "detector_median_px": 0.32,
+    "flagged": 2
+   }
+  },
+  "identities": {
+   "frames": 30,
+   "quality": {
+    "frames": 30,
+    "images_ok": 30,
+    "in_bounds": 30,
+    "visible": 30,
+    "detector_checked": 30,
+    "detector_agree": 30,
+    "detector_median_px": 0.127,
+    "flagged": 0
+   }
+  },
+  "pursuit": {
+   "frames": 45,
+   "quality": {
+    "frames": 45,
+    "images_ok": 45,
+    "in_bounds": 45,
+    "visible": 42,
+    "detector_checked": 42,
+    "detector_agree": 42,
+    "detector_median_px": 0.16,
+    "flagged": 0
+   },
+   "heatmaps": [
+    "heatmap_pursuit_target.png",
+    "heatmap_pursuit_pupils.png"
+   ]
+  },
+  "random": {
+   "frames": 24,
+   "quality": {
+    "frames": 24,
+    "images_ok": 24,
+    "in_bounds": 24,
+    "visible": 16,
+    "detector_checked": 13,
+    "detector_agree": 12,
+    "detector_median_px": 0.466,
+    "flagged": 1
+   },
+   "heatmaps": [
+    "heatmap_random_pupils.png",
+    "heatmap_random_target.png"
+   ]
+  },
+  "rays": {
+   "frames": 10,
+   "quality": {
+    "frames": 10,
+    "images_ok": 10,
+    "in_bounds": 10,
+    "visible": 0,
+    "detector_checked": 0,
+    "detector_agree": 0,
+    "detector_median_px": null,
+    "flagged": 0
+   }
+  },
+  "saccade": {
+   "frames": 57,
+   "quality": {
+    "frames": 57,
+    "images_ok": 57,
+    "in_bounds": 57,
+    "visible": 50,
+    "detector_checked": 50,
+    "detector_agree": 50,
+    "detector_median_px": 0.137,
+    "flagged": 0
+   },
+   "heatmaps": [
+    "heatmap_saccade_target.png",
+    "heatmap_saccade_pupils.png"
+   ]
+  },
+  "vergence": {
+   "frames": 9,
+   "quality": {
+    "frames": 9,
+    "images_ok": 9,
+    "in_bounds": 9,
+    "visible": 9,
+    "detector_checked": 9,
+    "detector_agree": 9,
+    "detector_median_px": 0.141,
+    "flagged": 0
+   }
+  }
+ }
+}
