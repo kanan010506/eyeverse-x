@@ -11,6 +11,13 @@ mandatory pipeline sits a small synthetic gaze lab for generating and checking t
 
 ![contact sheet](contact_sheet.png)
 
+## Presentation and Demo
+
+- [Project presentation (PPTX)](docs/TIET_TheTietans.pptx)
+- [Demo video (MP4)](output/eyeverse_demo.mp4)
+
+[![Watch the EYEVERSE X demo](contact_sheet.png)](output/eyeverse_demo.mp4)
+
 ## Results
 
 <!--RESULTS-->
